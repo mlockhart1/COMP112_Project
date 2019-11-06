@@ -13,6 +13,9 @@ knitr::opts_chunk$set(echo = TRUE)
 nfl_elo <- read_csv("https://projects.fivethirtyeight.com/nfl-api/nfl_elo.csv")
 ```
 
+```{r}
+nfl_elo
+```
 
 Link for explanation of datset variables:
 
@@ -22,4 +25,7 @@ https://github.com/fivethirtyeight/data/tree/master/mlb-elo
 mlb_elo_2019 <- read_csv("https://projects.fivethirtyeight.com/mlb-api/mlb_elo_latest.csv")
 ```
 
+```{r}
+mlb_elo_2019
+```
 
