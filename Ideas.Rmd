@@ -1,0 +1,27 @@
+---
+title: "Ideas"
+author: "Michael Lockhart"
+date: "11/5/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message=FALSE}
+library(tidyverse)
+library(lubridate)
+library(skimr) 
+library(naniar)
+library(readr)
+```
+
+Link for explanation of dataset variables:
+
+https://github.com/fivethirtyeight/data/tree/master/nfl-elo
+
+```{r}
+nfl_elo <- read_csv("https://projects.fivethirtyeight.com/nfl-api/nfl_elo.csv")
+```
+
