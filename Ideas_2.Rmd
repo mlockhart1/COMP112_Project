@@ -8,6 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+*We can compare ticket sale, merch sale, attendance, players, player pay, aggressive-ness, etc for womens and mens soccer.*
 
 ```{r}
 nfl_elo <- read_csv("https://projects.fivethirtyeight.com/nfl-api/nfl_elo.csv")
