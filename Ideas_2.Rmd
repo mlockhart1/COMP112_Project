@@ -8,18 +8,11 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+**IDEAS**
 *We can compare ticket sale, merch sale, attendance, players, player pay, aggressive-ness, etc for womens and mens soccer.*
-
+*We can explore one sport fully and look at how many people watch the game live in the stadium, which game had the highest attendance,Who is the most experienced player in the game, What’s the winning rate for each team, What’s the relationship between aggressive behaviors and the winning rate.*
 ```{r}
 library(readr)
-library(tidyverse)
-library(ggplot2)
-library(lubridate)
-library(ggmap)
-library(babynames)
-library(plotly) 
-library(gganimate)
-library(gifski) 
 ```
 
 ```{r}
