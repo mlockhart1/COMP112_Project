@@ -2,7 +2,9 @@
 title: "Ideas_2"
 author: "Michael Lockhart"
 date: "11/5/2019"
-output: html_document
+output: 
+  html_document:
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -27,18 +29,53 @@ nfl_elo <- read_csv("https://projects.fivethirtyeight.com/nfl-api/nfl_elo.csv")
 ```
 
 ```{r}
-nfl_elo
+nfl_elo %>% 
+  filter(team1 == "MIN") %>% 
+  arrange(desc(elo1_pre)) %>% 
+  
+  ggplot(aes(y = elo1_pre, x = season))+
+  geom_point() +
+  geom_smooth()
 ```
 
-Link for explanation of datset variables:
+Questions for Research:
 
-https://github.com/fivethirtyeight/data/tree/master/mlb-elo
+What does "elo1_pre" mean? We assume it is a metric five thirty eight loses for their NFL predictions
+
+What caused the peaks and valleys in the trends? Clearly at their conception, the team started off slowly in terms of the elo1_pre.
+
+How does attendance for games relate to elo1_pre?
+
+How accurate are the predictions? We can compare the metrics with their win and lose record?
 
 ```{r}
-mlb_elo_2019 <- read_csv("https://projects.fivethirtyeight.com/mlb-api/mlb_elo_latest.csv")
+
 ```
 
+
+
 ```{r}
-mlb_elo_2019
+nfl_elo_MIN <- nfl_elo %>% 
+  filter(team1 == "MIN") %>% 
+  group_by(season) %>% 
+  summarise(total_score = sum(score1)) %>% 
+  
+   ggplot(aes(y = total_score, x = season))+
+  geom_point()+
+  geom_line()
 ```
+```{r}
+ggplotly(nfl_elo_MIN)
+```
+
+
+Questions for further Research:
+
+We plotted the total scoring of the team per season, and we can look at why the trends occured the way they did.
+
+How does attendence relate to the total scores for each season?
+
+It would also be benefical to exmaine socring differential. 
+
+
 
