@@ -1,0 +1,10 @@
+---
+title: "Things to scrape"
+author: "Marleigh Jenkins-Morse"
+date: "11/5/2019"
+output: html_document
+---
+*This is a data set about women's soccer attendance*
+```{r setup, include=FALSE}
+#https://soccerstadiumdigest.com/2019-nwsl-attendance/
+```
