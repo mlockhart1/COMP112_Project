@@ -1,0 +1,54 @@
+---
+title: "NBAdrawingboard"
+author: "Isaiah"
+date: "11/21/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(readr)
+library(tidyverse)
+library(lubridate)
+library(ggmap)
+library(babynames)
+library(plotly)
+library(gganimate) 
+library(gifski) 
+```
+
+```{r}
+ForBornPlayers <- all_seasons %>% 
+  filter(country != "USA") %>% 
+  filter(draft_year != "undrafted") %>% 
+  filter(draft_year != "Undrafted") %>% 
+  group_by(draft_year)
+ForBornPlayers %>% 
+  ggplot(aes(x=draft_year, fill=country)) +
+  geom_bar()+
+  coord_flip()
+```
+
+```{r}
+Top10Foreign <- ForBornPlayers %>% 
+  group_by(country) %>% 
+  summarise(count=n()) %>% 
+  arrange(desc(count)) %>% 
+  head(10)
+```
+
+
+```{r}
+all_seasons %>% 
+  filter(country != "USA") %>% 
+  filter(draft_year != "undrafted") %>% 
+  filter(draft_year != "Undrafted") %>% 
+  group_by(country) %>% 
+  ggplot(aes(x=country))+
+  geom_bar()+
+  coord_flip()
+```
+
