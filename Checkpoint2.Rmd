@@ -1,0 +1,138 @@
+---
+title: "Checkpoint 2"
+author: "Michael Lockhart"
+date: "11/25/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message=FALSE}
+library(readr)
+library(tidyverse)
+library(readxl)
+library(maps)
+library(ggthemes)
+library(ggmap)
+library(ggplot2)
+library(lubridate)
+library(babynames)
+library(plotly)
+library(gganimate) 
+library(gifski) 
+```
+
+```{r, message=FALSE}
+all_seasons <- read_csv("all_seasons.csv")
+```
+
+```{r, message=FALSE}
+nbaStats <- read_csv("nbaStats.csv")
+```
+
+```{r, message=FALSE}
+NBA_Players_by_State <- read_excel("NBA Players by State.xlsx")
+```
+
+
+```{r, message=FALSE}
+Player_Stats_1996_2016 <- read_csv("all_seasons.csv")
+```
+
+```{r}
+NBA_Players_birthplace <- NBA_Players_by_State %>% 
+  select(Player, Date, City, State)
+```
+
+
+```{r}
+nbaNew <- nbaStats %>% 
+  select(Player, Status, Pos, labels, g, mp, FG, FGA, `3P`, 
+         `3PA`, FTA, `FT%`, TRB, AST, STL, TOV, PTS) %>% 
+  left_join(NBA_Players_birthplace, by = "Player") %>% 
+  filter(!is.na(Date)) %>% 
+  filter(!is.na(City)) %>% 
+  mutate(state_new= tolower(ifelse(State=="DC", "district of columbia", State))) 
+```
+
+```{r}
+games_per_state <- nbaNew %>% 
+  group_by(state_new) %>% 
+  filter(Status == "Active") %>% 
+  summarise(games = sum(g)) %>% 
+  arrange(desc(games))
+```
+
+
+```{r fig.width=10}
+states_map <- map_data("state")
+
+games_per_state %>% 
+  ggplot(aes(fill = games)) +
+  geom_map(aes(map_id = state_new), map = states_map) +
+  expand_limits(x = states_map$long, y = states_map$lat) + 
+  theme_map()+
+  scale_fill_distiller(palette = "Spectral")+
+  labs(title = "Games Played per State by Active Players as of 2017")
+
+```
+
+```{r}
+PTS_per_State <- nbaNew %>% 
+  group_by(state_new) %>% 
+  filter(Status == "Active") %>% 
+  summarise(pts_avg = mean(PTS)) %>% 
+  arrange(desc(pts_avg))
+```
+
+
+```{r fig.width=10}
+states_map <- map_data("state")
+
+PTS_per_State %>% 
+  ggplot(aes(fill = pts_avg)) +
+  geom_map(aes(map_id = state_new), map = states_map) +
+  expand_limits(x = states_map$long, y = states_map$lat) + 
+  theme_map()+
+  scale_fill_distiller(palette = "Spectral") +
+  labs(title = "Points Scored per State by Active Players as of 2017")
+
+```
+
+
+
+```{r}
+ForBornPlayers <- all_seasons %>% 
+  filter(country != "USA") %>% 
+  filter(draft_year != "undrafted") %>% 
+  filter(draft_year != "Undrafted") %>% 
+  group_by(draft_year)
+ForBornPlayers %>% 
+  ggplot(aes(x=draft_year, fill=country)) +
+  geom_bar()+
+  coord_flip()
+```
+
+```{r}
+Top10Foreign <- ForBornPlayers %>% 
+  group_by(country) %>% 
+  summarise(count=n()) %>% 
+  arrange(desc(count)) %>% 
+  head(10)
+```
+
+
+```{r}
+all_seasons %>% 
+  filter(country != "USA") %>% 
+  filter(draft_year != "undrafted") %>% 
+  filter(draft_year != "Undrafted") %>% 
+  group_by(country) %>% 
+  
+  ggplot(aes(x=country))+
+  geom_bar()+
+  coord_flip()
+```
+
