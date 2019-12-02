@@ -20,12 +20,15 @@ library(plotly)
 library(ggplot2)
 ```
 
+```{r, message=FALSE}
+all_seasons <- read_csv("all_seasons.csv")
+```
 
 ```{r, message=FALSE}
 nbaStats <- read_csv("nbaStats.csv")
 ```
 
-```{r}
+```{r, message=FALSE}
 NBA_Players_by_State <- read_excel("NBA Players by State.xlsx")
 ```
 
@@ -121,10 +124,28 @@ dist_countries %>%
 
 
 Next Visualization: 
-  Draft position of players from Foreign countries. Summarise the foreign countries like you did here. Don't want duplicates so groupby player so you can filter out the duplicates. 
+  Draft position of players from Foreign countries. Summarise the foreign countries  Don't want duplicates so groupby player so you can filter out the duplicates. group by country and summarise the mean of draft_number 
 
+```{r}
+dist_players <- all_seasons %>% 
+distinct(player_name) 
+ 
+```
 
+```{r}
+drft_num <- all_seasons %>% 
+  group_by(player_name) %>% 
+  select(country, draft_number) 
+  
+```
 
+How to get distinct players without loosing other data (country, draft_number)?
+```{r}
+drft_num %>% 
+  full_join(dist_players, by="player_name" )
+```
+
+  
 
 
 
