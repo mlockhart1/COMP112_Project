@@ -1,7 +1,7 @@
 ---
-title: "NBA Stats Dataset"
+title: "Checkpoint 2"
 author: "Michael Lockhart"
-date: "11/19/2019"
+date: "11/25/2019"
 output: html_document
 ---
 
@@ -16,8 +16,12 @@ library(readxl)
 library(maps)
 library(ggthemes)
 library(ggmap)
-library(plotly)
 library(ggplot2)
+library(lubridate)
+library(babynames)
+library(plotly)
+library(gganimate) 
+library(gifski) 
 ```
 
 ```{r, message=FALSE}
@@ -32,7 +36,6 @@ nbaStats <- read_csv("nbaStats.csv")
 NBA_Players_by_State <- read_excel("NBA Players by State.xlsx")
 ```
 
-# NBA_Players_by_State Variable Key
 
 ```{r, message=FALSE}
 Player_Stats_1996_2016 <- read_csv("all_seasons.csv")
@@ -100,9 +103,17 @@ PTS_per_State %>%
 
 
 
-
-
-
+```{r}
+ForBornPlayers <- all_seasons %>% 
+  filter(country != "USA") %>% 
+  filter(draft_year != "undrafted") %>% 
+  filter(draft_year != "Undrafted") %>% 
+  group_by(draft_year)
+ForBornPlayers %>% 
+  ggplot(aes(x=draft_year, fill=country)) +
+  geom_bar()+
+  coord_flip()
+```
 
 ```{r}
 dist_countries <- all_seasons %>% 
@@ -117,35 +128,8 @@ dist_countries %>%
   ggplot(aes(x = season, y = total_countries))+
   geom_col()+
   coord_flip()+
-  labs(title = "Number of Countries Represented in the NBA per Season", x = "Total Number of Countries", y = "NBA Season")
+  labs(title = "Number of Countries Represented in the NBA per Season", y = "Total Number of Countries", x = "NBA Season")
   
 
 ```
-
-
-Next Visualization: 
-  Draft position of players from Foreign countries. Summarise the foreign countries  Don't want duplicates so groupby player so you can filter out the duplicates. group by country and summarise the mean of draft_number 
-
-```{r}
-dist_players <- all_seasons %>% 
-distinct(player_name) 
- 
-```
-
-```{r}
-drft_num <- all_seasons %>% 
-  group_by(player_name) %>% 
-  select(country, draft_number) 
-  
-```
-
-How to get distinct players without loosing other data (country, draft_number)?
-```{r}
-drft_num %>% 
-  full_join(dist_players, by="player_name" )
-```
-
-  
-
-
 
