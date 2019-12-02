@@ -128,7 +128,7 @@ dist_countries %>%
   ggplot(aes(x = season, y = total_countries))+
   geom_col()+
   coord_flip()+
-  labs(title = "Number of Countries Represented in the NBA per Season", x = "Total Number of Countries", y = "NBA Season")
+  labs(title = "Number of Countries Represented in the NBA per Season", y = "Total Number of Countries", x = "NBA Season")
   
 
 ```
