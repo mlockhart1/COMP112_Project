@@ -1,0 +1,38 @@
+---
+title: "Project Draft"
+author: "Michael, Isaiah, Marleigh"
+date: "12/2/2019"
+output: html_document
+---
+
+**THE NBA**
+
+The NBA or the National Basket Ball Assosiation (add background information here)
+Talk about the significance of sports in general and how data science can help us understand trends and maybe make predictions?
+
+
+
+# About the data set:
+
+Add some information about the data sets we used and how they were manipulated 
+
+
+# What Questions do we want to explore?
+
+* What trends can we see in relation to geography in terms of the United States and world wide?
+
+* Which states have the most players? And which states contribute the highest scores?
+
+* Outside of the United States which countries contribute the most players?
+
+*Are there other questions that we can still answer? If we can find a data set about which countries watch the games it could be interesting to compare if those countries with the most players also have the most viewers.
+
+
+# Answers!
+
+Add the graphics here with more description of what they mean and why they are significant.
+
+
+# Further ways to explore
+
+We could add suggestions about other things people could look into. Maybe comparing our data to other sports or to the WNBA.
