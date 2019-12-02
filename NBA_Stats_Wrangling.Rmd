@@ -16,6 +16,7 @@ library(readxl)
 library(maps)
 library(ggthemes)
 library(ggmap)
+library(plotly)
 library(ggplot2)
 ```
 
@@ -29,36 +30,6 @@ NBA_Players_by_State <- read_excel("NBA Players by State.xlsx")
 ```
 
 # NBA_Players_by_State Variable Key
-
-player: Player first and last name
-yrs: number of years played
-g: games
-mp: minutes played
-fg: field goals
-fga: field goal attempts
-3p: 3-point field goals
-3pa: 3-point field goal attempts
-ft: free throws
-fta: free throw attempts
-orb: offensive rebounds
-trb: total rebounds
-ast: assists
-stl: steals
-blk: blocks
-tov: turnovers
-pf: personal fouls
-pts: points
-fg_2: field goal percentage
-3p_2: 3-point field goal percentage
-ft_2: free throw percentage
-mp_2: minutes played per game
-pts_2: points per game
-trb_2: total rebounds per game
-ast_2: assists per game
-date: birth date
-city: birth city
-state: birth state
-
 
 ```{r, message=FALSE}
 Player_Stats_1996_2016 <- read_csv("all_seasons.csv")
@@ -123,6 +94,37 @@ PTS_per_State %>%
   labs(title = "Points Scored per State by Active Players as of 2017")
 
 ```
+
+
+
+
+
+
+
+```{r}
+dist_countries <- all_seasons %>% 
+  group_by(season) %>% 
+  distinct(country) %>% 
+  count(country) %>% 
+  summarise(total_countries = sum(n)) 
+```
+
+```{r}
+dist_countries %>% 
+  ggplot(aes(x = season, y = total_countries))+
+  geom_col()+
+  coord_flip()+
+  labs(title = "Number of Countries Represented in the NBA per Season", x = "Total Number of Countries", y = "NBA Season")
+  
+
+```
+
+
+Next Visualization: 
+  Draft position of players from Foreign countries. Summarise the foreign countries like you did here. Don't want duplicates so groupby player so you can filter out the duplicates. 
+
+
+
 
 
 
