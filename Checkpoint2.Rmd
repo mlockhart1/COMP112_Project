@@ -116,23 +116,20 @@ ForBornPlayers %>%
 ```
 
 ```{r}
-Top10Foreign <- ForBornPlayers %>% 
-  group_by(country) %>% 
-  summarise(count=n()) %>% 
-  arrange(desc(count)) %>% 
-  head(10)
+dist_countries <- all_seasons %>% 
+  group_by(season) %>% 
+  distinct(country) %>% 
+  count(country) %>% 
+  summarise(total_countries = sum(n)) 
 ```
 
-
 ```{r}
-all_seasons %>% 
-  filter(country != "USA") %>% 
-  filter(draft_year != "undrafted") %>% 
-  filter(draft_year != "Undrafted") %>% 
-  group_by(country) %>% 
+dist_countries %>% 
+  ggplot(aes(x = season, y = total_countries))+
+  geom_col()+
+  coord_flip()+
+  labs(title = "Number of Countries Represented in the NBA per Season", x = "Total Number of Countries", y = "NBA Season")
   
-  ggplot(aes(x=country))+
-  geom_bar()+
-  coord_flip()
+
 ```
 
