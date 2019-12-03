@@ -66,13 +66,14 @@ games_per_state <- nbaNew %>%
 ```{r fig.width=10}
 states_map <- map_data("state")
 
-games_per_state %>% 
-  ggplot(aes(fill = games)) +
+  games_map <- ggplot(games_per_state, aes(fill = games)) +
   geom_map(aes(map_id = state_new), map = states_map) +
   expand_limits(x = states_map$long, y = states_map$lat) + 
   theme_map()+
   scale_fill_distiller(palette = "Spectral")+
   labs(title = "Games Played per State by Active Players as of 2017")
+
+ggplotly(games_map)
 
 ```
 
@@ -113,13 +114,12 @@ dist_countries <- all_seasons %>%
 ```
 
 ```{r}
-dist_countries %>% 
-  ggplot(aes(x = season, y = total_countries))+
+  total_countries <- ggplot(dist_countries, aes(x = season, y = total_countries))+
   geom_col()+
   coord_flip()+
-  labs(title = "Number of Countries Represented in the NBA per Season", x = "Total Number of Countries", y = "NBA Season")
+  labs(title = "Number of Countries Represented in the NBA per Season", x = "Total Number of Countries", y = "NBA Season") 
   
-
+ggplotly(total_countries)
 ```
 
 
@@ -142,7 +142,7 @@ drft_num <- all_seasons %>%
 How to get distinct players without loosing other data (country, draft_number)?
 ```{r}
 drft_num %>% 
-  full_join(dist_players, by="player_name" )
+  full_join(dist_players, by="player_name" )  
 ```
 
   
