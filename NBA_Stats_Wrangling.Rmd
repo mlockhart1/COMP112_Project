@@ -132,6 +132,20 @@ distinct(player_name,.keep_all = TRUE) %>%
   select(player_name, country, draft_number)
 ```
 
+#draft number by country
+```{r}
+dist_players%>% 
+  #filter(country != "USA") %>% 
+  filter(draft_number != "undrafted") %>% 
+  filter(draft_number != "Undrafted") %>% 
+  mutate(draft_pos = as.numeric(draft_number)) %>% 
+  group_by(country) %>%  
+  summarize(mean = mean(draft_pos)) %>%
+  arrange(desc(mean)) %>% 
+  ggplot(aes(x=fct_inorder(country), y=mean)) +
+ geom_bar(stat = "identity")+
+  coord_flip()
+```
 
   
 
