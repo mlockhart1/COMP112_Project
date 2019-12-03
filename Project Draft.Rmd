@@ -7,23 +7,23 @@ output: html_document
 
 **THE NBA**
 
-The NBA or the National Basket Ball Assosiation (add background information here)
-Talk about the significance of sports in general and how data science can help us understand trends and maybe make predictions?
+The NBA or the National Basketball Assosiation (add background information here)
+Talk about the significance of sports in general and how data science can help us understand trends and maybe make predictions (predictions about demographic trends) 
 
 
 
 # About the data set:
 
-Add some information about the data sets we used and how they were manipulated 
+Add some information about the data sets we used and how they were manipulated. Discuss the limitations of the dataset (The years the data is collected and the variables they include) 
 
 
 # What Questions do we want to explore?
 
-* What trends can we see in relation to geography in terms of the United States and world wide?
+* What trends can we see in relation to geography/demographics in terms of the United States and the world?
 
-* Which states have the most players? And which states contribute the highest scores?
+* Which states have the most players? And which states contribute the highest scores? (Games Played is the variable used to measure the composition of the league)
 
-* Outside of the United States which countries contribute the most players?
+* Outside of the United States which countries/continents contribute the most players? (It will probably be easier in terms of visualization to group the countries into continents. European, Asian, Oceanic)
 
 *Are there other questions that we can still answer? If we can find a data set about which countries watch the games it could be interesting to compare if those countries with the most players also have the most viewers.
 
@@ -35,4 +35,4 @@ Add the graphics here with more description of what they mean and why they are s
 
 # Further ways to explore
 
-We could add suggestions about other things people could look into. Maybe comparing our data to other sports or to the WNBA.
+We could add suggestions about other things people could look into. Maybe comparing our data to other sports or to the WNBA. (Do we want to find a WNBA dataset? I'm sure there are some out there that our similar to the datasets that we have.)
