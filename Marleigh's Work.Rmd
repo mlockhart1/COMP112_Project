@@ -1,0 +1,29 @@
+---
+title: "Marleigh's work"
+author: "Marleigh Jenkins-Morse"
+date: "11/19/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(readr)
+library(tidyverse)
+library(lubridate)
+library(ggmap)
+library(babynames)
+library(plotly)
+library(gganimate) 
+library(gifski) 
+```
+
+```{r}
+library("httr")
+library("readxl")
+GET("https://query.data.world/s/6fdq5xwdl4pmw5iq7pgoemzofzvqkp", write_disk(tf <- tempfile(fileext = ".xlsx")))
+NBA_Annual_Attendance <- read_excel(tf)
+```
+
+```{r}
+NBA_Annual_Attendance 
+```
+
