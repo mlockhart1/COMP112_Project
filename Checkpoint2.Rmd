@@ -65,8 +65,18 @@ games_per_state <- nbaNew %>%
   arrange(desc(games))
 ```
 
+```{r}
+unique_state <- 
+  
+  states_map %>% 
+  dplyr::distinct(region)
+  
+  
+  
+  
+```
 
-```{r fig.width=10}
+```{r fig.width=5}
 states_map <- map_data("state")
 
   games_map <- ggplot(games_per_state, aes(fill = games)) +
@@ -89,7 +99,7 @@ PTS_per_State <- nbaNew %>%
 ```
 
 
-```{r fig.width=10}
+```{r fig.width=12}
 states_map <- map_data("state")
 
 PTS_per_State %>% 
@@ -131,5 +141,26 @@ dist_countries <- all_seasons %>%
   labs(title = "Number of Countries Represented in the NBA per Season", x = "Total Number of Countries", y = "NBA Season") 
   
 ggplotly(total_countries)
+```
+
+```{r}
+dist_players <- all_seasons %>% 
+distinct(player_name,.keep_all = TRUE) %>% 
+  select(player_name, country, draft_number)
+```
+
+```{r}
+players_country <- dist_players %>% 
+  group_by(country) %>% 
+  filter(draft_number != "Undrafted") %>% 
+  count() 
+  
+```
+
+
+```{r}
+players_country %>% 
+  
+  
 ```
 
