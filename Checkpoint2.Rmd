@@ -112,17 +112,7 @@ PTS_per_State %>%
 
 
 
-```{r}
-ForBornPlayers <- all_seasons %>% 
-  filter(country != "USA") %>% 
-  filter(draft_year != "undrafted") %>% 
-  filter(draft_year != "Undrafted") %>% 
-  group_by(draft_year)
-ForBornPlayers %>% 
-  ggplot(aes(x=draft_year, fill=country)) +
-  geom_bar()+
-  coord_flip()
-```
+
 
 ```{r}
 dist_countries <- all_seasons %>% 
@@ -150,15 +140,33 @@ distinct(player_name,.keep_all = TRUE) %>%
 ```{r}
 players_country <- dist_players %>% 
   group_by(country) %>% 
-  filter(draft_number != "Undrafted") %>% 
-  count() 
-  
+  filter(draft_number != "Undrafted", country != "USA") %>% 
+  count() %>% 
+  arrange(desc(n))
 ```
-
-
+**USA is filtered out because it has significantly more people in NBA (1192)**
 ```{r}
 players_country %>% 
-  
-  
+   ggplot(aes(x=fct_inorder(country), y=n)) +
+  geom_bar(stat = "identity")+
+  coord_flip()
+ggplotly()
 ```
 
+#draft number by country
+```{r}
+dist_players%>% 
+  #filter(country != "USA") %>% 
+  filter(draft_number != "undrafted") %>% 
+  filter(draft_number != "Undrafted") %>% 
+  mutate(draft_pos = as.numeric(draft_number)) %>% 
+  group_by(country) %>%  
+  summarize(mean = mean(draft_pos)) %>%
+  arrange(desc(mean)) %>% 
+  
+  
+  ggplot(aes(x=fct_inorder(country), y=mean)) +
+ geom_bar(stat = "identity")+
+  coord_flip()
+ggplotly()
+```

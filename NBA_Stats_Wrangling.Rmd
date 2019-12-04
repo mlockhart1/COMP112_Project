@@ -142,9 +142,12 @@ dist_players%>%
   group_by(country) %>%  
   summarize(mean = mean(draft_pos)) %>%
   arrange(desc(mean)) %>% 
+  
+  
   ggplot(aes(x=fct_inorder(country), y=mean)) +
  geom_bar(stat = "identity")+
   coord_flip()
+ggplotly()
 ```
 
   
