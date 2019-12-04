@@ -76,17 +76,15 @@ unique_state <-
   
 ```
 
-```{r fig.width=5}
+```{r fig.width=8}
 states_map <- map_data("state")
 
-  games_map <- ggplot(games_per_state, aes(fill = games)) +
+  ggplot(games_per_state, aes(fill = games)) +
   geom_map(aes(map_id = state_new), map = states_map) +
   expand_limits(x = states_map$long, y = states_map$lat) + 
   theme_map()+
   scale_fill_distiller(palette = "Spectral")+
   labs(title = "Games Played per State by Active Players as of 2017")
-
-ggplotly(games_map)
 
 ```
 
@@ -99,7 +97,7 @@ PTS_per_State <- nbaNew %>%
 ```
 
 
-```{r fig.width=12}
+```{r fig.width=8}
 states_map <- map_data("state")
 
 PTS_per_State %>% 
