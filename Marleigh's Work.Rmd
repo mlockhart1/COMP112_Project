@@ -24,6 +24,30 @@ NBA_Annual_Attendance <- read_excel(tf)
 ```
 
 ```{r}
-NBA_Annual_Attendance 
+NBA_Annual_Attendance %>% 
+  group_by(`Starting Year`) %>% 
+  ggplot(aes(y= `Home: Avg Attendance`, x= `Starting Year`, color= Team))+
+  geom_line()
+```
+```{r}
+NBA_Annual_Attendance %>% 
+  filter(`Starting Year` == 2000) %>% 
+  ggplot(aes(y= `Home: Total Attendance`, x= `Starting Year`, fill= Team))+
+  geom_col()
+```
+
+```{r}
+NBA_Annual_Attendance %>% 
+  filter(`Starting Year` == 2014) %>% 
+  ggplot(aes(y= `Home: Total Attendance`, x= `Starting Year`, fill= Team))+
+  geom_col()
+```
+
+```{r}
+NBA_Annual_Attendance %>% 
+  filter(Team == 'Bulls') %>% 
+  ggplot(aes(y= `Home: Avg Attendance`, x= `Starting Year`, fill= Team))+
+  geom_line()
+
 ```
 
