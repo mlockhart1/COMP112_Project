@@ -51,3 +51,25 @@ NBA_Annual_Attendance %>%
 
 ```
 
+```{r}
+international_players<-zcm7h7bwdig7dcrxe5cc7g7d5cctu2
+player_salary <- X7krc2hcuja6c3fw5m6po2m53qo6smi
+```
+
+```{r}
+new <- international_players %>% 
+  left_join(all_seasons, by= "draft_year")
+  
+new
+```
+
+```{r}
+salary_new <-new %>% 
+  full_join(player_salary, by=c("_id"="player_id"))
+
+salary_new
+```
+
+
+
+
