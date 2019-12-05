@@ -1,0 +1,112 @@
+---
+title: "Visualization Summaries"
+author: "Michael Lockhart"
+date: "12/5/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message=FALSE}
+library(readr)
+library(tidyverse)
+library(readxl)
+library(maps)
+library(ggthemes)
+library(ggmap)
+library(ggplot2)
+library(lubridate)
+library(babynames)
+library(plotly)
+library(gganimate) 
+library(gifski) 
+```
+
+```{r, message=FALSE}
+nbaStats <- read_csv("nbaStats.csv")
+```
+
+```{r}
+nbaNew <- nbaStats %>% 
+  select(Player, Status, Pos, labels, g, mp, FG, FGA, `3P`, 
+         `3PA`, FTA, `FT%`, TRB, AST, STL, TOV, PTS) %>% 
+  left_join(NBA_Players_birthplace, by = "Player") %>% 
+  filter(!is.na(Date)) %>% 
+  filter(!is.na(City)) %>% 
+  mutate(state_new= tolower(ifelse(State=="DC", "district of columbia", State))) 
+```
+
+```{r}
+games_per_state <- nbaNew %>% 
+  group_by(state_new) %>% 
+  filter(Status == "Active") %>% 
+  summarise(games = sum(g)) %>% 
+  arrange(desc(games))
+```
+```{r, message=FALSE}
+NBA_Players_by_State <- read_excel("NBA Players by State.xlsx")
+```
+
+```{r}
+NBA_Players_birthplace <- NBA_Players_by_State %>% 
+  select(Player, Date, City, State)
+```
+
+
+
+
+
+```{r}
+nba_players_map <-NBA_Players_birthplace %>%
+  mutate(state_new= tolower(ifelse(State=="DC", "district of columbia", State))) %>% 
+  group_by(state_new) %>% 
+  count() %>% 
+  arrange(desc(n))
+```
+
+
+
+
+```{r}
+states_map <- map_data("state")
+  ggplot(nba_players_map, aes(fill = n)) +
+  geom_map(aes(map_id = state_new), map = states_map) +
+  expand_limits(x = states_map$long, y = states_map$lat) + 
+  theme_map()+
+  scale_fill_distiller(palette = "Spectral")+
+  labs(title = "Number of Players in the NBA per State (Find year of dataset)")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
