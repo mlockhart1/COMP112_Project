@@ -78,35 +78,5 @@ states_map <- map_data("state")
   scale_fill_distiller(palette = "Spectral")+
   labs(title = "Number of Players in the NBA per State (Find year of dataset)")
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+**Figure 1**
 
