@@ -151,6 +151,47 @@ ggplotly()
 ```
 
   
+```{r}
+country_mean <- dist_players%>% 
+  #filter(country != "USA") %>% 
+  filter(draft_number != "undrafted") %>% 
+  filter(draft_number != "Undrafted") %>% 
+  mutate(draft_pos = as.numeric(draft_number)) %>% 
+  group_by(country) %>%  
+  summarize(mean = mean(draft_pos)) %>%
+  arrange(desc(mean))
+  
+country_mean %>%   
+  ggplot(aes(x=fct_inorder(country), y=mean)) +
+ geom_bar(stat = "identity")+
+  coord_flip()
+ggplotly()
+```
 
+```{r}
+country_mean %>% 
+  left_join(players_country, "country") %>% 
+  ggplot(aes(x=fct_inorder(country), y=mean, fill = n)) +
+ geom_bar(stat = "identity") +
+  theme_classic() +
+  coord_flip()
+ggplotly()
+```
 
+```{r}
+library("httr")
+library("readxl")
+GET("https://query.data.world/s/6fdq5xwdl4pmw5iq7pgoemzofzvqkp", write_disk(tf <- tempfile(fileext = ".xlsx")))
+NBA_Annual_Attendance <- read_excel(tf)
+```
+
+```{r}
+NBA_Annual_Attendance
+```
+
+```{r}
+all_seasons %>% 
+  group_by(team_abbreviation) %>% 
+  summarise(n())
+```
 
