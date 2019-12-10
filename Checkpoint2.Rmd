@@ -155,18 +155,26 @@ ggplotly()
 
 #draft number by country
 ```{r}
-dist_players%>% 
+country_mean <- dist_players%>% 
   #filter(country != "USA") %>% 
   filter(draft_number != "undrafted") %>% 
   filter(draft_number != "Undrafted") %>% 
   mutate(draft_pos = as.numeric(draft_number)) %>% 
   group_by(country) %>%  
   summarize(mean = mean(draft_pos)) %>%
-  arrange(desc(mean)) %>% 
-  
-  
-  ggplot(aes(x=fct_inorder(country), y=mean)) +
+  arrange(desc(mean))
+```
+
+```{r}
+ ggplot(country_mean, aes(x=fct_inorder(country), y=mean)) +
  geom_bar(stat = "identity")+
   coord_flip()
 ggplotly()
 ```
+
+
+```{r}
+players_country %>% 
+  left_join(country_mean, by= "country")
+```
+
