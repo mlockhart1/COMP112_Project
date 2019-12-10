@@ -28,23 +28,6 @@ library(gifski)
 nbaStats <- read_csv("nbaStats.csv")
 ```
 
-```{r}
-nbaNew <- nbaStats %>% 
-  select(Player, Status, Pos, labels, g, mp, FG, FGA, `3P`, 
-         `3PA`, FTA, `FT%`, TRB, AST, STL, TOV, PTS) %>% 
-  left_join(NBA_Players_birthplace, by = "Player") %>% 
-  filter(!is.na(Date)) %>% 
-  filter(!is.na(City)) %>% 
-  mutate(state_new= tolower(ifelse(State=="DC", "district of columbia", State))) 
-```
-
-```{r}
-games_per_state <- nbaNew %>% 
-  group_by(state_new) %>% 
-  filter(Status == "Active") %>% 
-  summarise(games = sum(g)) %>% 
-  arrange(desc(games))
-```
 ```{r, message=FALSE}
 NBA_Players_by_State <- read_excel("NBA Players by State.xlsx")
 ```
@@ -56,7 +39,15 @@ NBA_Players_birthplace <- NBA_Players_by_State %>%
 
 
 
-
+```{r}
+nbaNew <- nbaStats %>% 
+  select(Player, Status, Pos, labels, g, mp, FG, FGA, `3P`, 
+         `3PA`, FTA, `FT%`, TRB, AST, STL, TOV, PTS) %>% 
+  left_join(NBA_Players_birthplace, by = "Player") %>% 
+  filter(!is.na(Date)) %>% 
+  filter(!is.na(City)) %>% 
+  mutate(state_new= tolower(ifelse(State=="DC", "district of columbia", State))) 
+```
 
 ```{r}
 nba_players_map <-NBA_Players_birthplace %>%
@@ -67,8 +58,6 @@ nba_players_map <-NBA_Players_birthplace %>%
 ```
 
 
-
-
 ```{r}
 states_map <- map_data("state")
   ggplot(nba_players_map, aes(fill = n)) +
@@ -76,7 +65,87 @@ states_map <- map_data("state")
   expand_limits(x = states_map$long, y = states_map$lat) + 
   theme_map()+
   scale_fill_distiller(palette = "Spectral")+
-  labs(title = "Number of Players in the NBA per State (Find year of dataset)")
+  labs(title = "Number of Players in the NBA per State (1996-2016 Seasons)")
 ```
-**Figure 1**
+
+**Figure 1** 
+This map shows the number of players in the NBA per state. The dataset for the visualization is comprised of entries from 1996-2016 seasons. This Map is used to help show the demographic distribution of players in the NBA specifically from the United States. 
+
+
+```{r}
+dist_countries <- all_seasons %>% 
+  group_by(season) %>% 
+  distinct(country) %>% 
+  count(country) %>% 
+  summarise(total_countries = sum(n)) 
+```
+
+```{r}
+  total_countries <- ggplot(dist_countries, aes(x = season, y = total_countries))+
+  geom_col()+
+  coord_flip()+
+  labs(title = "Number of Countries Represented in the NBA per Season", x = "NBA Season" , y = "Total Number of Countries") 
+  
+ggplotly(total_countries)
+```
+
+**Figure 2** 
+This graph illustrates the total number of countries represented in the NBA. Representation is based on the nationality of players in the NBA. The dataset is comprised of entries from the 1996-2016 seasons.
+
+
+
+```{r}
+dist_players <- all_seasons %>% 
+distinct(player_name,.keep_all = TRUE) %>% 
+  select(player_name, country, draft_number)
+```
+
+```{r}
+players_country <- dist_players %>% 
+  group_by(country) %>% 
+  filter(draft_number != "Undrafted", country != "USA") %>% 
+  count() %>% 
+  arrange(desc(n))
+```
+
+```{r}
+players_per_country <- players_country %>% 
+   ggplot(aes(x=fct_inorder(country), y=n)) +
+  geom_bar(stat = "identity")+
+  coord_flip()+
+  labs(title = "Number of Players in the NBA per Country (Excluding the U.S.)", x= "Country", y = "Number of Players")
+```
+
+```{r}
+ggplotly(players_per_country)
+```
+
+**Figure 3**
+This graph shows the number of players represented in the NBA per country that is not the United States. The United States made up 1,192 players of the entire dataset, so we decided to seperate the visualizations so that we could more efficiently show the relationship between represented in the NBA. 
+
+
+```{r}
+country_mean <- dist_players%>% 
+  #filter(country != "USA") %>% 
+  filter(draft_number != "undrafted") %>% 
+  filter(draft_number != "Undrafted") %>% 
+  mutate(draft_pos = as.numeric(draft_number)) %>% 
+  group_by(country) %>%  
+  summarize(mean = mean(draft_pos)) %>%
+  arrange(desc(mean))
+  
+draft_mean <- country_mean %>%   
+  ggplot(aes(x=fct_inorder(country), y=mean)) +
+ geom_bar(stat = "identity")+
+  coord_flip()+
+  labs(title = "Average Draft Position of Players per Country", x= "Country", y= "Average Draft Position" )
+```
+
+```{r}
+ggplotly(draft_mean)
+```
+
+**Figure 3**
+This graph shows the average draft position of players selected in the NBA draft from specific countries. We used draft position to refer to the subjective value of players entering the NBA.   
+
 
