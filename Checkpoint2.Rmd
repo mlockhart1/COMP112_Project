@@ -65,16 +65,7 @@ games_per_state <- nbaNew %>%
   arrange(desc(games))
 ```
 
-```{r}
-unique_state <- 
-  
-  states_map %>% 
-  dplyr::distinct(region)
-  
-  
-  
-  
-```
+
 
 ```{r fig.width=8}
 states_map <- map_data("state")
