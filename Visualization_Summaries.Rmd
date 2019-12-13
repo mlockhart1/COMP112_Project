@@ -71,6 +71,82 @@ states_map <- map_data("state")
 **Figure 1** 
 This map shows the number of players in the NBA per state. The dataset for the visualization is comprised of entries from 1996-2016 seasons. This Map is used to help show the demographic distribution of players in the NBA specifically from the United States. 
 
+```{r}
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/2011_us_ag_exports.csv")
+df$hover <- with(df, paste(state, '<br>', "Beef", beef, "Dairy", dairy, "<br>",
+                           "Fruits", total.fruits, "Veggies", total.veggies,
+                           "<br>", "Wheat", wheat, "Corn", corn))
+# give state boundaries a white border
+l <- list(color = toRGB("white"), width = 2)
+# specify some map projection/options
+g <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  showlakes = TRUE,
+  lakecolor = toRGB('white')
+)
+
+plot_geo(df, locationmode = 'USA-states') %>%
+  add_trace(
+    z = ~total.exports, text = ~hover, locations = ~code,
+    color = ~total.exports, colors = 'Purples'
+  ) %>%
+  colorbar(title = "Millions USD") %>%
+  layout(
+    title = '2011 US Agriculture Exports by State<br>(Hover for breakdown)',
+    geo = g
+  )
+```
+
+
+```{r}
+nba_players_map 
+nba_players_map$hover <- with(nba_players_map, paste(state_new, "players", n))
+
+  
+  
+l <- list(color = toRGB("white"), width = 2) 
+
+g <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  showlakes = TRUE,
+  lakecolor = toRGB('white'))
+
+plot_geo(nba_players_map, locationmode = 'USA-states') %>%
+  add_trace(
+    z = ~n, text = ~hover, locations = ~state_new,
+    color = ~n, colors = 'Blues'
+  ) %>%
+  colorbar(title = "Number of Players") %>%
+  layout(
+    title = "Number of Players in the NBA per State (1996-2016 Seasons)",
+    geo = g
+  )
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ```{r}
 dist_countries <- all_seasons %>% 
@@ -145,7 +221,7 @@ draft_mean <- country_mean %>%
 ggplotly(draft_mean)
 ```
 
-**Figure 3**
+**Figure 4**
 This graph shows the average draft position of players selected in the NBA draft from specific countries. We used draft position to refer to the subjective value of players entering the NBA.   
 
 
