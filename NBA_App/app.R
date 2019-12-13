@@ -14,6 +14,7 @@ library(readr)
 library(tidyverse)
 library(dplyr)
 library(rsconnect)
+
 players_country
 
 # Define UI for application that draws a histogram
@@ -77,38 +78,18 @@ ui <- fluidPage(
                                                                        )), 
     plotOutput(outputId = "graph"))
 
-    # Application title
-    titlePanel("Old Faithful Geyser Data")
 
-    # Sidebar with a slider input for number of bins 
-    sidebarLayout(
-        sidebarPanel(
-            sliderInput("bins",
-                        "Number of bins:",
-                        min = 1,
-                        max = 50,
-                        value = 30)
-        ),
-
-        # Show a plot of the generated distribution
-        mainPanel(
-           plotOutput("distPlot")
-        )
-    )
-)
-
-# Define server logic required to draw a histogram
 server <- function(input, output) {
+    output$graph <- renderPlot({
+        players_country %>% 
+            filter(country == input$country,) %>% 
+            
+         
+                ggplot(aes(x=fct_inorder(country), y=n)) +
+                geom_bar(stat = "identity")+
+                coord_flip()+
+                labs(title = "Number of Players in the NBA per Country (Excluding the U.S.)", x= "Country", y = "Number of Players")
+    })}
 
-    output$distPlot <- renderPlot({
-        # generate bins based on input$bins from ui.R
-        x    <- faithful[, 2]
-        bins <- seq(min(x), max(x), length.out = input$bins + 1)
 
-        # draw the histogram with the specified number of bins
-        hist(x, breaks = bins, col = 'darkgray', border = 'white')
-    })
-}
-
-# Run the application 
 shinyApp(ui = ui, server = server)
