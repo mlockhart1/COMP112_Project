@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r, message=FALSE}
+```{r, message=FALSE, include=FALSE}
 library(readr)
 library(tidyverse)
 library(readxl)
@@ -24,23 +24,23 @@ library(gganimate)
 library(gifski) 
 ```
 
-```{r, message=FALSE}
+```{r, message=FALSE, include=FALSE}
 nbaStats <- read_csv("nbaStats.csv")
 ```
 
-```{r, message=FALSE}
+```{r, message=FALSE, include=FALSE}
 NBA_Players_by_State <- read_excel("NBA Players by State.xlsx") %>% 
   mutate(State= ifelse(State== "Washingon", "Washington", State))
 ```
 
-```{r}
+```{r, include=FALSE}
 NBA_Players_birthplace <- NBA_Players_by_State %>% 
   select(Player, Date, City, State)
 ```
 
 
 
-```{r}
+```{r, include=FALSE}
 nbaNew <- nbaStats %>% 
   select(Player, Status, Pos, labels, g, mp, FG, FGA, `3P`, 
          `3PA`, FTA, `FT%`, TRB, AST, STL, TOV, PTS) %>% 
@@ -50,7 +50,7 @@ nbaNew <- nbaStats %>%
   mutate(state_new= tolower(ifelse(State=="DC", "district of columbia", State))) 
 ```
 
-```{r}
+```{r, include=FALSE}
 state_data <- tibble(name = str_to_lower(state.name), 
                      code = state.abb) 
 
@@ -63,13 +63,13 @@ nba_players_map <-NBA_Players_birthplace %>%
   mutate(code= ifelse(state_new== "district of columbia", "DC", code))
 ```
 
-```{r}
+```{r, include=FALSE}
 state_data <- tibble(name = str_to_lower(state.name), 
                      code = state.abb)
 ```
 
 
-```{r}
+```{r, include=FALSE}
 nba_players_map 
 
   
@@ -81,7 +81,9 @@ g <- list(
   projection = list(type = 'albers usa'),
   showlakes = TRUE,
   lakecolor = toRGB('white'))
+```
 
+```{r, echo=FALSE, fig.width=10}
 plot_geo(nba_players_map, locationmode = 'USA-states') %>%
   add_trace(
     z = ~n, text = ~str_to_title(state_new), locations = ~code,
@@ -92,11 +94,14 @@ plot_geo(nba_players_map, locationmode = 'USA-states') %>%
     title = "Number of Players in the NBA per State (1996-2016 Seasons)",
     geo = g
   )
-
 ```
 
 
-```{r}
+```{r, message=FALSE, include=FALSE}
+all_seasons <- read_csv("all_seasons.csv")
+```
+
+```{r, include=FALSE}
 dist_countries <- all_seasons %>% 
   group_by(season) %>% 
   distinct(country) %>% 
@@ -104,21 +109,25 @@ dist_countries <- all_seasons %>%
   summarise(total_countries = sum(n)) 
 ```
 
-```{r}
+```{r, include=FALSE}
   total_countries <- ggplot(dist_countries, aes(x = season, y = total_countries))+
-  geom_col()+
+  geom_col(aes(fill = "coral1"))+
+  theme(legend.position = "none") +
   coord_flip()+
   labs(title = "Number of Countries Represented in the NBA per Season", x = "NBA Season" , y = "Total Number of Countries") 
-  
-ggplotly(total_countries)
 ```
+
+```{r, echo=FALSE, fig.width=10}
+ggplotly(total_countries) 
+```
+
 
 **Figure 2** 
 This graph illustrates the total number of countries represented in the NBA. Representation is based on the nationality of players in the NBA. The dataset is comprised of entries from the 1996-2016 seasons.
 
 
 
-```{r}
+```{r, include=FALSE}
 dist_players <- all_seasons %>% 
 distinct(player_name,.keep_all = TRUE) %>% 
   select(player_name, country, draft_number)
@@ -126,7 +135,7 @@ distinct(player_name,.keep_all = TRUE) %>%
 
 
 
-```{r, fig.height= 10, fig.width= 8}
+```{r, fig.height= 10, fig.width= 8, include=FALSE}
 country_mean <- dist_players%>% 
   filter(country != "USA") %>% 
   filter(draft_number != "undrafted") %>% 
@@ -138,13 +147,14 @@ country_mean <- dist_players%>%
   
 plot <- country_mean %>%   
   ggplot(aes(x=fct_inorder(country), y=mean)) +
- geom_point(aes(size = total))+
+ geom_point(aes(size = total, fill = "coral1"))+
+  theme(legend.position = "none") +
   coord_flip()+
   labs(title = "Average Draft Position of Players per Country", x= "Country", y= "Average Draft Position" )
 
 ```
 
-```{r, fig.height=10, fig.width=8}
+```{r, fig.height=10, fig.width=10, echo=FALSE}
 ggplotly(plot)
 ```
 
