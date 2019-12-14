@@ -97,6 +97,11 @@ plot_geo(nba_players_map, locationmode = 'USA-states') %>%
 ```
 
 
+
+
+**Figure 1** 
+This map shows the number of players that have played in the NBA per state in the United States. It is based on a dataset that includes entries from 1996-2016 seasons. The darker the shade, the more players in the NBA from that state. 
+
 ```{r, message=FALSE, include=FALSE}
 all_seasons <- read_csv("all_seasons.csv")
 ```
@@ -114,7 +119,7 @@ dist_countries <- all_seasons %>%
   geom_col(aes(fill = "coral1"))+
   theme(legend.position = "none") +
   coord_flip()+
-  labs(title = "Number of Countries Represented in the NBA per Season", x = "NBA Season" , y = "Total Number of Countries") 
+  labs(title = "Number of Countries Represented in the NBA per Season (1996-2016)", x = "NBA Season" , y = "Total Number of Countries") 
 ```
 
 ```{r, echo=FALSE, fig.width=10}
@@ -122,8 +127,10 @@ ggplotly(total_countries)
 ```
 
 
+
+
 **Figure 2** 
-This graph illustrates the total number of countries represented in the NBA. Representation is based on the nationality of players in the NBA. The dataset is comprised of entries from the 1996-2016 seasons.
+This graph illustrates the total number of countries represented in the NBA. Representation is based on the country of origin of players in the NBA. The dataset is comprised of entries from the 1996-2016 seasons.
 
 
 
@@ -161,7 +168,7 @@ ggplotly(plot)
 
 
 
-**Figure 4**
-This graph shows the average draft position of players selected in the NBA draft from specific countries. We used draft position to refer to the subjective value of players entering the NBA.   
+**Figure 3**
+This graph shows the average draft position of players selected in the NBA draft based on their country of origin. We used draft position to examine a subjective value of players based on country of origin. X-axis measures the draft position and the size of the point measures the total number of players that have played in the NBA from that country (1996-2016 seasons). The NBA draft consists of two rounds, each with 30 selection slots for a total of 60 picks. The lower the number of the selection slot, the more valuable the player is viewed.   
 
 
