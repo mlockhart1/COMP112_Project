@@ -25,6 +25,10 @@ library(gifski)
 ```
 
 ```{r, message=FALSE, include=FALSE}
+all_seasons <- read_csv("all_seasons.csv")
+```
+
+```{r, message=FALSE, include=FALSE}
 nbaStats <- read_csv("nbaStats.csv")
 ```
 
@@ -38,39 +42,32 @@ NBA_Players_birthplace <- NBA_Players_by_State %>%
   select(Player, Date, City, State)
 ```
 
-
-
-```{r, include=FALSE}
-nbaNew <- nbaStats %>% 
-  select(Player, Status, Pos, labels, g, mp, FG, FGA, `3P`, 
-         `3PA`, FTA, `FT%`, TRB, AST, STL, TOV, PTS) %>% 
-  left_join(NBA_Players_birthplace, by = "Player") %>% 
-  filter(!is.na(Date)) %>% 
-  filter(!is.na(City)) %>% 
-  mutate(state_new= tolower(ifelse(State=="DC", "district of columbia", State))) 
+```{r}
+pts_state <- all_seasons %>% 
+  left_join(NBA_Players_birthplace, by = c( "player_name" = "Player")) %>% 
+  mutate(state_new = tolower(ifelse(State=="DC", "district of columbia", State))) %>% 
+  group_by(state_new) %>% 
+  summarise(avg = mean(pts)) %>% 
+  filter(state_new != "NA")
 ```
 
-```{r, include=FALSE}
+```{r}
 state_data <- tibble(name = str_to_lower(state.name), 
                      code = state.abb) 
 
-nba_players_map <-NBA_Players_birthplace %>%
-  mutate(state_new= tolower(ifelse(State=="DC", "district of columbia", State))) %>% 
+total_states <- all_seasons %>% 
+  left_join(NBA_Players_birthplace, by = c( "player_name" = "Player")) %>% 
+  mutate(state_new = tolower(ifelse(State=="DC", "district of columbia", State))) %>% 
+  distinct(player_name,.keep_all = TRUE) %>% 
   group_by(state_new) %>% 
-  count() %>% 
-  arrange(desc(n)) %>% 
+  summarise(total = n()) %>% 
+  filter(state_new != "NA") %>% 
   left_join(state_data, by= c("state_new" = "name")) %>% 
   mutate(code= ifelse(state_new== "district of columbia", "DC", code))
 ```
 
 ```{r, include=FALSE}
-state_data <- tibble(name = str_to_lower(state.name), 
-                     code = state.abb)
-```
-
-
-```{r, include=FALSE}
-nba_players_map 
+total_states
 
   
   
@@ -84,10 +81,10 @@ g <- list(
 ```
 
 ```{r, echo=FALSE, fig.width=10}
-plot_geo(nba_players_map, locationmode = 'USA-states') %>%
+plot_geo(total_states, locationmode = 'USA-states') %>%
   add_trace(
-    z = ~n, text = ~str_to_title(state_new), locations = ~code,
-    color = ~n, colors = 'Blues'
+    z = ~total, text = ~str_to_title(state_new), locations = ~code,
+    color = ~total, colors = 'Blues'
   ) %>%
   colorbar(title = "Number of Players") %>%
   layout(
@@ -102,9 +99,14 @@ plot_geo(nba_players_map, locationmode = 'USA-states') %>%
 **Figure 1** 
 This map shows the number of players that have played in the NBA per state in the United States. It is based on a dataset that includes entries from 1996-2016 seasons. The darker the shade, the more players in the NBA from that state. 
 
-```{r, message=FALSE, include=FALSE}
-all_seasons <- read_csv("all_seasons.csv")
+
+
+
+```{r}
+pts_state
 ```
+
+
 
 ```{r, include=FALSE}
 dist_countries <- all_seasons %>% 
