@@ -195,3 +195,57 @@ all_seasons %>%
   summarise(n())
 ```
 
+
+```{r, include=FALSE}
+nbaNew <- nbaStats %>% 
+  select(Player, Status, Pos, labels, g, mp, FG, FGA, `3P`, 
+         `3PA`, FTA, `FT%`, TRB, AST, STL, TOV, PTS) %>% 
+  left_join(NBA_Players_birthplace, by = "Player") %>% 
+  filter(!is.na(Date)) %>% 
+  filter(!is.na(City)) %>% 
+  mutate(state_new= tolower(ifelse(State=="DC", "district of columbia", State))) 
+```
+
+```{r, include=FALSE}
+state_data <- tibble(name = str_to_lower(state.name), 
+                     code = state.abb) 
+
+nba_players_map <-NBA_Players_birthplace %>%
+  mutate(state_new= tolower(ifelse(State=="DC", "district of columbia", State))) %>% 
+  group_by(state_new) %>% 
+  count() %>% 
+  arrange(desc(n)) %>% 
+  left_join(state_data, by= c("state_new" = "name")) %>% 
+  mutate(code= ifelse(state_new== "district of columbia", "DC", code))
+```
+
+
+
+
+
+```{r, include=FALSE}
+nba_players_map 
+
+  
+  
+l <- list(color = toRGB("white"), width = 2) 
+
+g <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  showlakes = TRUE,
+  lakecolor = toRGB('white'))
+```
+
+```{r, echo=FALSE, fig.width=10}
+plot_geo(nba_players_map, locationmode = 'USA-states') %>%
+  add_trace(
+    z = ~n, text = ~str_to_title(state_new), locations = ~code,
+    color = ~n, colors = 'Blues'
+  ) %>%
+  colorbar(title = "Number of Players") %>%
+  layout(
+    title = "Number of Players in the NBA per State (1996-2016 Seasons)",
+    geo = g
+  )
+```
