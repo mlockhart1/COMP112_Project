@@ -40,6 +40,7 @@ Because international participation was on the rise, we wanted to find out it in
 
 
 # Further ways to explore
+
 We could add suggestions about other things people could look into. Maybe comparing our data to other sports or to the WNBA. (Do we want to find a WNBA data set? I'm sure there are some out there that our similar to the data sets that we have.)
 
 # Limitations:
