@@ -5,19 +5,45 @@ date: "12/2/2019"
 output: html_document
 ---
 
-**THE NBA**
+# THE NBA 
 
-The NBA or the National Basketball Association (add background information here)
-Talk about the significance of sports in general and how data science can help us understand trends and maybe make predictions (predictions about demographic trends) 
+We decided to center our project around the NBA or the National Basketball Association. The association was founded in June 1946, and is now widely considered to be the premier men's professional basketball league in the world. In the United States and Canada it is one of the four major professional sports leagues, which also includes Major League Baseball, the National Hockey League, and the National Football League. The NBA has a regular season that runs from October to April, during which each of the 30 teams playing 82 games. The NBA players are also some of the world's best paid athletes by average annual salary.
 
-
-
-# About the data set:
-
-Add some information about the data sets we used and how they were manipulated. Discuss the limitations of the data set (The years the data is collected and the variables they include) 
+From the beginning of the project, we knew that we wanted to focus on some aspect of the sport world. In the common vernacular, we hear most about statistics and visualizations when talking about sports. Sports in general are general are significant to people across the nation. Most people grow up playing some kind of sport and many are united in the support for their team. Economic importance. 
+“Sports easily cross international and intercultural boundaries despite differences in language and both written and visual literacy. Even if one does not understand all the rules, strategies and subtleties of basketball, most everyone can understand the basic point of the game from a telecast regardless of the language in which it is presented… Game and competition culture essentially is universal.” 
 
 
-# What Questions do we want to explore?
+The contribution of sports to media is difficult to overstate. In terms of content, hundreds of television and radio programs and networks, magazines, videogames, and newspapers focus on sport, as do hundreds of thousands of Internet sites. The seemingly insatiable appetite for sports content long ago extended form game or event coverage to revies, previews, and “inside” information.  The consistently growing importance of sports also is demonstrated by the expanding amount of fantasy sports information, lifestyle content, and even fictional content related to sports… Even nonfans can not help but notice how much media attention sports recieve. Sports coverage consistently and increasingly appears both in its own specialized all-sports media and as an integral part of news of the day, Unlike most other industries, sports capture the attention of the public on an ongoing basis. 
+
+
+
+First, new developments in the technologies of mass communication, especially the development of satellite television, have created unprecedented global audiences for events like the Olympics and the World Cup.
+https://journals.sagepub.com/doi/full/10.1111/j.1467-954X.2006.00650.x
+
+ as many people in their free time will look up the “stats”- participating in fantasy leagues, watching games, or playing the sports themselves. 
+
+
+Sports in 
+ More generally they provide resources for the construction of ‘a meaningful social life in relation to a changing societal environment that has the potential to destabilize and threaten these things’ (Roche, 2000: 225). Sports ‘mega-events’ are important elements in the orientation of nations to international or global society. 
+
+On an individual level sports have impacted our lives in a variety of ways. Sports in general have been known to build character values, contribute to academic success, physical benefits, importance of healthy socializing, stress relief. 
+
+
+understand the significance of sports in general and how data science can help us understand trends and maybe make predictions. We set out looking for data sets that would allow us to make interesting graphics and make predictions about demographic trends.
+
+
+Many of the visualizations that we vividly remember came from interesting sports analysis. Many people devote their time into this kind of work, so we knew that we would get interesting results. 
+
+The majority of our data came from two data sets called “all_seasons” and “nbaStats”. 
+Add some information about the data sets we used and how they were manipulated. Discuss the limitations of the data set (The years the data is collected and the variables they include) with Methods. We created some guiding questions that would help us in our analysis:
+
+
+
+
+The majority of our data came from two data sets called “all_seasons” and “nbaStats”. 
+Add some information about the data sets we used and how they were manipulated. Discuss the limitations of the data set (The years the data is collected and the variables they include) with Methods. We created some guiding questions that would help us in our analysis:
+
+** Guiding Questions** 
 
 * What trends can we see in relation to geography/demographics in terms of the United States and the world?
 
@@ -26,6 +52,15 @@ Add some information about the data sets we used and how they were manipulated. 
 * Outside of the United States which countries/continents contribute the most players? (It will probably be easier in terms of visualization to group the countries into continents. European, Asian, Oceanic)
 
 *Are there other questions that we can still answer? If we can find a data set about which countries watch the games it could be interesting to compare if those countries with the most players also have the most viewers.
+
+
+# Limitations:
+Only includes players, year limitation, minor league
+
+A lot of data sets that would have been helpful to create visualizations were monetized, and therefore inaccessible to us. We included the data in our written analysis, but were unable to demonstrate the findings in helpful visualization. For example, we could not find any data sets that had international viewership.
+
+
+
 
 
 # Answers!
@@ -43,11 +78,13 @@ Because international participation was on the rise, we wanted to find out it in
 
 We could add suggestions about other things people could look into. Maybe comparing our data to other sports or to the WNBA. (Do we want to find a WNBA data set? I'm sure there are some out there that our similar to the data sets that we have.)
 
-# Limitations:
-A lot of data sets that would have been helpful to create visualizations were monetized, and therefore inaccessible to us. We included the data in our written analysis, but were unable to demonstrate the findings in helpful visualization. For example, we could not find any data sets that had international viewership.
+look into other factors that might explain why certain areas recieve the most players
+
+
 
 # Sources
-https://www.nba.com/article/2019/10/22/nba-rosters-feature-108-international-players-2019-20
-http://global.nba.com/basketball-without-borders/
-https://cares.nba.com/international/
-https://flowingdata.com/2014/05/13/nba-fans-by-zip-code/
+* https://www.nba.com/article/2019/10/22/nba-rosters-feature-108-international-players-2019-20
+* http://global.nba.com/basketball-without-borders/
+* https://cares.nba.com/international/
+* https://flowingdata.com/2014/05/13/nba-fans-by-zip-code/
+* https://www.sportsrec.com/8127260/what-is-the-importance-of-sports-in-our-lives
