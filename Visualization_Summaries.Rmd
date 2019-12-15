@@ -43,6 +43,12 @@ NBA_Players_birthplace <- NBA_Players_by_State %>%
 ```
 
 ```{r, include=FALSE}
+dist_players <- all_seasons %>% 
+distinct(player_name,.keep_all = TRUE) %>% 
+  select(player_name, country, draft_number)
+```
+
+```{r, include=FALSE}
 pts_state <- all_seasons %>% 
   left_join(NBA_Players_birthplace, by = c( "player_name" = "Player")) %>% 
   mutate(state_new = tolower(ifelse(State=="DC", "district of columbia", State))) %>% 
@@ -164,18 +170,42 @@ ggplotly(total_countries)
 
 
 
-**Figure 2** 
+**Figure 3** 
 This graph illustrates the total number of countries represented in the NBA. Representation is based on the country of origin of players in the NBA. The dataset is comprised of entries from the 1996-2016 seasons.
 
 
 
+
 ```{r, include=FALSE}
-dist_players <- all_seasons %>% 
-distinct(player_name,.keep_all = TRUE) %>% 
-  select(player_name, country, draft_number)
+Ttl <- dist_players %>% 
+  group_by(country) %>% 
+  summarise(total = n())
 ```
 
+```{r, include=FALSE}
+undrft <- dist_players %>% 
+  group_by(country) %>% 
+  filter(draft_number == "Undrafted", country != "USA") %>% 
+  count(draft_number) %>% 
+  left_join(Ttl, by = "country") %>% 
+  arrange(desc(total))
+```
 
+```{r, include=FALSE}
+undrft_plot <- undrft %>% 
+  ggplot(aes(x = fct_inorder(country), y = n))+
+  geom_col(aes(fill= total))+
+  labs(title = "Number of Undrafted Players in the NBA per Country (1996-2016)", x = "Country", y = "Undrafted Players")+
+  coord_flip()
+  
+```
+
+```{r, echo=FALSE, fig.height=10.5, fig.width= 10}
+ggplotly(undrft_plot)
+```
+
+**Figure 4**
+This graph shows the number of players that are "Undrafted" per country represented in the NBA. The NBA draft consists of two rounds, each with 30 selection slots for a total of 60 picks. Undrafted refers to when a player is not slected in the draft but signs with a team as a free agent.
 
 ```{r, fig.height= 10, fig.width= 8, include=FALSE}
 country_mean <- dist_players%>% 
@@ -192,7 +222,7 @@ plot <- country_mean %>%
  geom_point(aes(size = total, fill = "coral1"))+
   theme(legend.position = "none") +
   coord_flip()+
-  labs(title = "Average Draft Position of Players per Country", x= "Country", y= "Average Draft Position" )
+  labs(title = "Average Draft Position of Players per Country (1996-2016)",  x= "Country", y= "Average Draft Position")
 
 ```
 
@@ -203,7 +233,7 @@ ggplotly(plot)
 
 
 
-**Figure 3**
+**Figure 5**
 This graph shows the average draft position of players selected in the NBA draft based on their country of origin. We used draft position to examine a subjective value of players based on the country of origin. X-axis measures the draft position and the size of the point measures the total number of players that have played in the NBA from that country (1996-2016 seasons). The NBA draft consists of two rounds, each with 30 selection slots for a total of 60 picks. The lower the number of the selection slot, the more valuable the player is viewed.   
 
 
@@ -238,7 +268,7 @@ pts_plot <- total_ptsAVG %>%
   geom_point(aes(size = total, fill = "coral1"))+
   theme(legend.position = "none") +
   coord_flip()+
-  labs(title = "Average Points per Game By Country", x= "Country", y= "Average Points per Game" )
+  labs(title = "Average Points per Game By Country (1996-2016)", x= "Country", y= "Average Points per Game" )
 
 ggplotly(pts_plot)
 ```
@@ -246,7 +276,7 @@ ggplotly(pts_plot)
 
 
 
-**Figure 4**
+**Figure 6**
 This graph shows the average points per game of players in the NBA based on their country of origin. We used an average of points scored to examine a subjective value of players based on the country of origin. The x-axis measures the average points scored and the size of the point measures the total number of players that have played in the NBA from that country (1996-2016 seasons).
 
 
