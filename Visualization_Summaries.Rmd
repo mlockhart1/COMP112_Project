@@ -42,7 +42,7 @@ NBA_Players_birthplace <- NBA_Players_by_State %>%
   select(Player, Date, City, State)
 ```
 
-```{r}
+```{r, include=FALSE}
 pts_state <- all_seasons %>% 
   left_join(NBA_Players_birthplace, by = c( "player_name" = "Player")) %>% 
   mutate(state_new = tolower(ifelse(State=="DC", "district of columbia", State))) %>% 
@@ -51,7 +51,7 @@ pts_state <- all_seasons %>%
   filter(state_new != "NA")
 ```
 
-```{r}
+```{r, include=FALSE}
 state_data <- tibble(name = str_to_lower(state.name), 
                      code = state.abb) 
 
@@ -102,11 +102,44 @@ This map shows the number of players that have played in the NBA per state in th
 
 
 
-```{r}
-pts_state
+```{r, include=FALSE}
+pts_total_states <- pts_state %>% 
+  left_join(total_states, by = "state_new")
+```
+
+```{r, include=FALSE}
+pts_total_states
+pts_total_states$hover <- with(pts_total_states, paste(str_to_title(state_new), "<br>", "Total Players", total))
+  
+  
+l <- list(color = toRGB("white"), width = 2) 
+
+g <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  showlakes = TRUE,
+  lakecolor = toRGB('white'))
 ```
 
 
+```{r, echo=FALSE, fig.width=10}
+plot_geo(pts_total_states, locationmode = 'USA-states') %>%
+  add_trace(
+    z = ~avg, text = ~hover, locations = ~code,
+    color = ~avg, colors = "Greens"
+  ) %>%
+  colorbar(title = "Points per Game") %>%
+  layout(
+    title = "Average Points per Game By State (1996-2016 Seasons)",
+    geo = g
+  )
+```
+
+
+
+
+**Figure 2**
+This map shows the points per game of players in the NBA based on the state they are from. It is based on a dataset that includes entries from 1996-2016 seasons. The darker the shade, the greater average of points by players from that state.
 
 ```{r, include=FALSE}
 dist_countries <- all_seasons %>% 
