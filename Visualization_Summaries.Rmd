@@ -169,6 +169,50 @@ ggplotly(plot)
 
 
 **Figure 3**
-This graph shows the average draft position of players selected in the NBA draft based on their country of origin. We used draft position to examine a subjective value of players based on country of origin. X-axis measures the draft position and the size of the point measures the total number of players that have played in the NBA from that country (1996-2016 seasons). The NBA draft consists of two rounds, each with 30 selection slots for a total of 60 picks. The lower the number of the selection slot, the more valuable the player is viewed.   
+This graph shows the average draft position of players selected in the NBA draft based on their country of origin. We used draft position to examine a subjective value of players based on the country of origin. X-axis measures the draft position and the size of the point measures the total number of players that have played in the NBA from that country (1996-2016 seasons). The NBA draft consists of two rounds, each with 30 selection slots for a total of 60 picks. The lower the number of the selection slot, the more valuable the player is viewed.   
+
+
+
+```{r, include=FALSE}
+pts_country <- all_seasons %>% 
+  group_by(country) %>% 
+  summarise(avg = mean(pts))
+
+```
+
+```{r, include=FALSE}
+total_players <- dist_players %>% 
+  group_by(country) %>% 
+  summarise(total = n()) %>% 
+  filter(country != "USA", country != "U.S. Virgin Islands")
+
+```
+
+```{r, include= FALSE}
+total_ptsAVG <- pts_country %>% 
+  left_join(total_players, by = "country") %>% 
+  filter(country != "U.S. Virgin Islands") %>% 
+  arrange(desc(avg))
+
+ 
+```
+
+```{r, fig.height=12, fig.width=10, echo=FALSE}
+pts_plot <- total_ptsAVG %>% 
+  ggplot(aes(x= fct_inorder(country), y= avg)) +
+  geom_point(aes(size = total, fill = "coral1"))+
+  theme(legend.position = "none") +
+  coord_flip()+
+  labs(title = "Average Points per Game By Country", x= "Country", y= "Average Points per Game" )
+
+ggplotly(pts_plot)
+```
+
+
+
+
+**Figure 4**
+This graph shows the average points per game of players in the NBA based on their country of origin. We used an average of points scored to examine a subjective value of players based on the country of origin. The x-axis measures the average points scored and the size of the point measures the total number of players that have played in the NBA from that country (1996-2016 seasons).
+
 
 
