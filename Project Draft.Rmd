@@ -7,43 +7,13 @@ output: html_document
 
 # THE NBA 
 
-We decided to center our project around the NBA or the National Basketball Association. The association was founded in June 1946, and is now widely considered to be the premier men's professional basketball league in the world. In the United States and Canada it is one of the four major professional sports leagues, which also includes Major League Baseball, the National Hockey League, and the National Football League. The NBA has a regular season that runs from October to April, during which each of the 30 teams playing 82 games. The NBA players are also some of the world's best paid athletes by average annual salary.
+We decided to center our project around the NBA, also known as the National Basketball Association. The association was founded in June 1946, and is now widely considered to be the premier men's professional basketball league in the world. In the United States and Canada it is one of the four major professional sports leagues, which also includes Major League Baseball, the National Hockey League, and the National Football League. The NBA has a regular season that runs from October to April, during which each of the 30 teams playing 82 games. The NBA players are also some of the world's best paid athletes by average annual salary.
 
-From the beginning of the project, we knew that we wanted to focus on some aspect of the sport world. In the common vernacular, we hear most about statistics and visualizations when talking about sports. Sports in general are general are significant to people across the nation. Most people grow up playing some kind of sport and many are united in the support for their team. Economic importance. 
-“Sports easily cross international and intercultural boundaries despite differences in language and both written and visual literacy. Even if one does not understand all the rules, strategies and subtleties of basketball, most everyone can understand the basic point of the game from a telecast regardless of the language in which it is presented… Game and competition culture essentially is universal.” 
+From the beginning of the project, we knew that we wanted to focus on some aspect of the sport world. We realized that in the common vernacular, we hear most about statistics and visualizations when talking about sports. In terms of content, there are hundreds of television and radio programs, magazines, videogames, and hundreds of thousands of Internet sites that are primarily focused on sports, Sports are also unique in the fact that they capture the attention of the public on an ongoing basis, and remain in the public sphere. Sports in general are significant to people across the nation and world wide. More generally they provide resources for the construction of "a meaningful social life in relation to a changing societal environment that has the potential to destabilize and threaten these things". Many people in their free time look up sports “stats” because they are emotionally invested in a team or are participating in fantasy leagues. As Robert V. Bellamy Jr., author of the article "Sports Media: A Modern Institution", put it sports have the ability to cross "international and intercultural boundaries despite differences in language and both written and visual literacy" and this is because "game and competition culture essentially is universal.” One does not have to understand all of the rules and strategies to understand the basic point of the game. On an individual level sports have also impacted our lives in a variety of ways. 
 
+From a data science standpoint we wanted to understand the significance of sports in general and how the coding we learned in class could help us understand trends and maybe make predictions. We ended up focusing primarily on the NBA with the majority of our data came from three data sets called “all_seasons”, “nbaStats”, and "NBA Players by State". The "all_seasons" data set contains two decades (1996-2016) of data on each player who has been part of a team's roster. It illustrates demographic variables such as age, height, weight and country of origin. It also capture biographical details like the team they played for, draft year and round. In addition, it also demonstrates statistics like games played, average number of points, rebounds, assists, etc. "nbaStats" looks at player's status, posistion, label, as well as other various statistics from 2017 (?). "NBA Players by State" was mostly useful as it had the states domestic players were born in. It also provided other statistics like the number of years play. We created some guiding questions that would help us in our analysis:   
 
-The contribution of sports to media is difficult to overstate. In terms of content, hundreds of television and radio programs and networks, magazines, videogames, and newspapers focus on sport, as do hundreds of thousands of Internet sites. The seemingly insatiable appetite for sports content long ago extended form game or event coverage to revies, previews, and “inside” information.  The consistently growing importance of sports also is demonstrated by the expanding amount of fantasy sports information, lifestyle content, and even fictional content related to sports… Even nonfans can not help but notice how much media attention sports recieve. Sports coverage consistently and increasingly appears both in its own specialized all-sports media and as an integral part of news of the day, Unlike most other industries, sports capture the attention of the public on an ongoing basis. 
-
-
-
-First, new developments in the technologies of mass communication, especially the development of satellite television, have created unprecedented global audiences for events like the Olympics and the World Cup.
-https://journals.sagepub.com/doi/full/10.1111/j.1467-954X.2006.00650.x
-
- as many people in their free time will look up the “stats”- participating in fantasy leagues, watching games, or playing the sports themselves. 
-
-
-Sports in 
- More generally they provide resources for the construction of ‘a meaningful social life in relation to a changing societal environment that has the potential to destabilize and threaten these things’ (Roche, 2000: 225). Sports ‘mega-events’ are important elements in the orientation of nations to international or global society. 
-
-On an individual level sports have impacted our lives in a variety of ways. Sports in general have been known to build character values, contribute to academic success, physical benefits, importance of healthy socializing, stress relief. 
-
-
-understand the significance of sports in general and how data science can help us understand trends and maybe make predictions. We set out looking for data sets that would allow us to make interesting graphics and make predictions about demographic trends.
-
-
-Many of the visualizations that we vividly remember came from interesting sports analysis. Many people devote their time into this kind of work, so we knew that we would get interesting results. 
-
-The majority of our data came from two data sets called “all_seasons” and “nbaStats”. 
-Add some information about the data sets we used and how they were manipulated. Discuss the limitations of the data set (The years the data is collected and the variables they include) with Methods. We created some guiding questions that would help us in our analysis:
-
-
-
-
-The majority of our data came from two data sets called “all_seasons” and “nbaStats”. 
-Add some information about the data sets we used and how they were manipulated. Discuss the limitations of the data set (The years the data is collected and the variables they include) with Methods. We created some guiding questions that would help us in our analysis:
-
-** Guiding Questions** 
+**Guiding Questions** 
 
 * What trends can we see in relation to geography/demographics in terms of the United States and the world?
 
@@ -54,25 +24,28 @@ Add some information about the data sets we used and how they were manipulated. 
 *Are there other questions that we can still answer? If we can find a data set about which countries watch the games it could be interesting to compare if those countries with the most players also have the most viewers.
 
 
-# Limitations:
 Only includes players, year limitation, minor league
 
 A lot of data sets that would have been helpful to create visualizations were monetized, and therefore inaccessible to us. We included the data in our written analysis, but were unable to demonstrate the findings in helpful visualization. For example, we could not find any data sets that had international viewership.
 
 
 
+Extra:
 
+Sports have been known to build character values, contribute to academic success, physical benefits, importance of healthy socializing, stress relief. 
+
+"a meaningful social life in relation to a changing societal environment that has the potential to destabilize and threaten these things" (Roche, 2000: 225). 
 
 # Answers!
 
 International Graphics:
-As our data has shown, the NBA has overall increased its international players since 1996. Though our data does not feature the 2017-18 and 2019-20 years, we found that in 2017-18 there were 42 countries represented and this number fell to 38 countries and territories for the 2019-20 season. For this 2019-20 it was noted that the most-represented countries were from Canada with 16 players, followed by Australia, France, Croatia, and Serbia respectively.  Canada saw a record six players selected in the NBA Draft 2019, surpassing the previous record for most draftees from a non-U.S. country which was five set by France in 2016. In our “Average Draft Position of Players per Country” visualization the two largest points are held by France and Canada demonstrating that they have the highest number of total players from the 1996-2016 seasons. Therefore, the data from the NBA Draft 2019 makes sense with our findings.  
+  As our data has shown, the NBA has overall increased its international players since 1996. Though our data does not feature the 2017-18 and 2019-20 years, we found that in 2017-18 there were 42 countries represented and this number fell to 38 countries and territories for the 2019-20 season. For this 2019-20 it was noted that the most-represented countries were from Canada with 16 players, followed by Australia, France, Croatia, and Serbia respectively.  Canada saw a record six players selected in the NBA Draft 2019, surpassing the previous record for most draftees from a non-U.S. country which was five set by France in 2016. In our “Average Draft Position of Players per Country” visualization the two largest points are held by France and Canada demonstrating that they have the highest number of total players from the 1996-2016 seasons. Therefore, the data from the NBA Draft 2019 makes sense with our findings.  
 
-We noticed that there was a significant increase in international players following 2000, and we wanted to explore why. We found that in 2000 the NBA had established a focus on their international outreach and created the program Basketball Without Borders (BWB). Basketball without Borders aims to “unite young basketball players to promote the sport and encourage positive social change in the areas of education, health, and wellness.” The organization brings in NBA players and coaches to train the top youth players from Asia, Europe, Latin America and Africa. Since its foundation this organization has reached more than 3,000 participants in 24 cities in 20 countries on 5 continents. Most impressively, 37 former Basketball Without Borders campers drafted into the NBA.
+  We noticed that there was a significant increase in international players following 2000, and we wanted to explore why. We found that in 2000 the NBA had established a focus on their international outreach and created the program Basketball Without Borders (BWB). Basketball without Borders aims to “unite young basketball players to promote the sport and encourage positive social change in the areas of education, health, and wellness.” The organization brings in NBA players and coaches to train the top youth players from Asia, Europe, Latin America and Africa. Since its foundation this organization has reached more than 3,000 participants in 24 cities in 20 countries on 5 continents. Most impressively, 37 former Basketball Without Borders campers drafted into the NBA.
 
-Because international participation was on the rise, we wanted to find out it international viewership was as well. We found that it was, but not in the way we would have expected. While it might be assumed that countries with the most players would have the highest viewership, this was not the case. Kevin Wang, writer for ESPN, noted this as well and stated that “while international fans have a special connection with players from their home countries, that's becoming less important for overall interest.” According to one study in 2014, just 25.5% of total viewership came from the United States with the Philippines, Brazil, Italy and France next on the list. Canada which has its own team, the Toronto Raptors, fell into sixth place overall. In 2017, Everaldo Marques, a sportscaster for ESPN, noticed a similar trend and said that viewership had significantly increased in Brazil compared with the year before, even without Brazilian players like Anderson Varejao and Leandro Barbosa representing the nation. Those in the field believe that although representation of different nations in the NBA is important, the growth in access to technology is the primary factor in the continued growth in viewership. 
+  Because international participation was on the rise, we wanted to find out it international viewership was as well. We found that it was, but not in the way we would have expected. While it might be assumed that countries with the most players would have the highest viewership, this was not the case. Kevin Wang, writer for ESPN, noted this as well and stated that “while international fans have a special connection with players from their home countries, that's becoming less important for overall interest.” According to one study in 2014, just 25.5% of total viewership came from the United States with the Philippines, Brazil, Italy and France next on the list. Canada which has its own team, the Toronto Raptors, fell into sixth place overall. In 2017, Everaldo Marques, a sportscaster for ESPN, noticed a similar trend and said that viewership had significantly increased in Brazil compared with the year before, even without Brazilian players like Anderson Varejao and Leandro Barbosa representing the nation. Those in the field believe that although representation of different nations in the NBA is important, the growth in access to technology is the primary factor in the continued growth in viewership. 
 
-
+First, new developments in the technologies of mass communication, especially the development of satellite television, have created unprecedented global audiences for events like the Olympics and the World Cup.
 
 # Further ways to explore
 
