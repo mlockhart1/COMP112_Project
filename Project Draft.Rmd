@@ -21,20 +21,10 @@ From a data science standpoint we wanted to understand the significance of sport
 
 * Outside of the United States which countries/continents contribute the most players? (It will probably be easier in terms of visualization to group the countries into continents. European, Asian, Oceanic)
 
-*Are there other questions that we can still answer? If we can find a data set about which countries watch the games it could be interesting to compare if those countries with the most players also have the most viewers.
+
+Even though we found significant data there were limitations. For one, the data from "all_seasons" only had the years from 1996 to 2016, so we were limited in our analysis. The datas sets also only included players from the NBA and not from the minor league or the WNBA. In general our topic was made difficult because it was so popular. A lot of data sets that would have been helpful to create visualizations were monetized, and therefore inaccessible to us. We included the data in our written analysis, but were unable to demonstrate the findings in helpful visualization. For example, we could not find any data sets that had international viewership.
 
 
-Only includes players, year limitation, minor league
-
-A lot of data sets that would have been helpful to create visualizations were monetized, and therefore inaccessible to us. We included the data in our written analysis, but were unable to demonstrate the findings in helpful visualization. For example, we could not find any data sets that had international viewership.
-
-
-
-Extra:
-
-Sports have been known to build character values, contribute to academic success, physical benefits, importance of healthy socializing, stress relief. 
-
-"a meaningful social life in relation to a changing societal environment that has the potential to destabilize and threaten these things" (Roche, 2000: 225). 
 
 # Answers!
 
