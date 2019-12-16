@@ -19,10 +19,10 @@ From a data science standpoint we wanted to understand the significance of sport
 
 * Which states have the most players? And which states contribute the highest scores? (Games Played is the variable used to measure the composition of the league)
 
-* Outside of the United States which countries/continents contribute the most players? (It will probably be easier in terms of visualization to group the countries into continents. European, Asian, Oceanic)
+* Outside of the United States which countries/continents contribute the most players? 
 
 
-Even though we found significant data sets there were limitations. For one, the data from "all_seasons" only had the years from 1996 to 2016, so we were limited in our analysis. The data sets also only included players from the NBA and not from the minor league or the WNBA. In general our topic was made difficult because it was so popular. A lot of data sets that would have been helpful to create visualizations were monetized, and therefore inaccessible to us. We included the data in our written analysis, but were unable to demonstrate the findings in helpful visualization. For example, we could not find any data sets that had international viewership.
+Even though we found significant data sets there were limitations. For one, the data from "all_seasons" only had the years from 1996 to 2016, so we were limited in our analysis. Even though on a large scale more data from years before 1996 would have been useful, twenty years worth of components were difficult to compare. We couldn't really facet our visualizations to show changes over time without simplying the results and leaving variables out. The data sets also only included players from the NBA and not from the minor league or the WNBA. In general our topic was made difficult because it was so popular. A lot of data sets that would have been helpful to create visualizations were monetized, and therefore inaccessible to us. We included the data in our written analysis, but were unable to demonstrate the findings in helpful visualization. For example, we could not find any data sets that had international viewership.
 
 
 
@@ -32,8 +32,7 @@ We began our anaylsis on a smaller scale, looking at the demographics just in th
 
 **Put in Number of Players in the NBA per State** 
 
-We then looked into the how many points were ... average. Add more here
-When scrolling over the states in "Average Points per Game by State" you can see the average points 
+We then looked into the how many points were scored on average in the years 1996 t0 2016, this can be seen in our "Average Points per Game by State" visualization. Interestingly those states with the most players do not score the most on average. The highest scoring state was Hawaii with an average of about 12 points per game. When scrolling over the states in "Average Points per Game by State" you can see, not only the average points, but the total number of players there as well.
 
 **Put in Average Points per Game by State**
 
@@ -59,6 +58,12 @@ What does this have to do with our anaylsis? How can we use this to answer our q
 **Average Points per Game by Country**
 
 How does looking at the average differ from total on points?
+
+
+**Conclusion**
+What are our overall conclusions? What did we find out.
+The data is more complex than it seems. Even if states have more players, it doesn't mean that on average those states score the most points, The same goes with the various countries. This makes sense though because though some states may have more points total, their higher total number of players shifts the results. 
+
 
 # Further ways to explore
 
