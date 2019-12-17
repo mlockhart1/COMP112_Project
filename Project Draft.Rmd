@@ -25,9 +25,9 @@ From a data science standpoint we wanted to understand the significance of sport
 * Outside of the United States which countries/continents contribute the most players? 
 
 
-Even though we found significant data sets there were limitations. For one, the data from "all_seasons" only had the years from 1996 to 2016, so we were limited in our analysis. Even though on a large scale more data from years before 1996 would have been useful, twenty years worth of components were difficult to compare. We couldn't really facet our visualizations to show changes over time without simplying the results and leaving variables out. The data sets also only included players from the NBA and not from the minor league or the WNBA. In general our topic was made difficult because it was so popular. A lot of data sets that would have been helpful to create visualizations were monetized, and therefore inaccessible to us. We included the data in our written analysis, but were unable to demonstrate the findings in helpful visualization. For example, we could not find any data sets that had international viewership.
+Even though we found significant data sets there were limitations. For one, the data from "all_seasons" only had the years from 1996 to 2016, so we were limited in our analysis. Even though on a large scale more data from years before 1996 would have been useful, twenty years worth of components were difficult to compare. We couldn't really facet our visualizations to show changes over time without simplying the results and leaving variables out. The data sets also only included players from the NBA and not from the minor league or the WNBA. In doing our analysis we also realized that birth state and birth country are not necesarry the state people are "from", as people regualary move during their life times. In general our topic was made difficult because it was so popular. A lot of data sets that would have been helpful to create visualizations were monetized, and therefore inaccessible to us. We included the data in our written analysis, but were unable to demonstrate the findings in helpful visualization. For example, we could not find any data sets that had international viewership.
 
-Could also talk about how birth state might not actually be home state, people move.
+
 
 # Analysis
 
