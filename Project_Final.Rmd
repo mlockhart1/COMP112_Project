@@ -218,6 +218,8 @@ ggplotly(plot)
 ```
 
 
+
+
 **Figure 2**
 This graph shows the average draft position of players selected in the NBA draft based on their country of origin. We used draft position to examine a subjective value of players based on the country of origin. X-axis measures the draft position and the size of the point measures the total number of players that have played in the NBA from that country (1996-2016 seasons). The NBA draft consists of two rounds, each with 30 selection slots for a total of 60 picks. The lower the number of the selection slot, the more valuable the player is viewed.
 
@@ -225,6 +227,91 @@ This graph shows the average draft position of players selected in the NBA draft
 In order to achieve a comprehensive and understandable representation of the data, this visualization deals with the average draft position for each country. The averages are plotted against their corresponding countries in a point plot, which includes the number of players representing each country as the size of the points on the plot. There are many cases in which a country was only represented by one player in the 2 decades covered by the dataset, so it was important to include the sample size for draft position averages. It quickly became apparent that this was necessary as the US Virgin Islands were the only country with an average draft position of 1. This can be attributed to Tim Duncan, who is often referred to as one of the greatest NBA players of all time and one of the few players to represent the Virgin Islands in the history of the NBA. His career began in 1997 and continued through 2015, nearly exactly the span of the all_seasons dataset. One would expect countries at the extremes of the draft position distribution to have smaller sample size of players, and this is true for the plot.
 	
 Figure 2 reveals that foreign born NBA players are distributed across all draft positions and follow a roughly standard distribution centered around the expected draft mean. There are no notable outliers, however there is a slight concentration of better represented countries towards the lower end of the distribution. This would suggest there is a slight correlation between better representation and higher draft position averages, but regardless it is a subtle relationship.
+
+```{r, include=FALSE}
+total_states
+total_states$hover <- with(total_states, paste(str_to_title(state_new), "<br>", "Average Draft Position", Avg ))
+  
+  
+l <- list(color = toRGB("white"), width = 2) 
+
+g <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  showlakes = TRUE,
+  lakecolor = toRGB('white'))
+```
+
+```{r, echo=FALSE, fig.width=10}
+plot_geo(total_states, locationmode = 'USA-states') %>%
+  add_trace(
+    z = ~Total, text = ~hover, locations = ~code,
+    color = ~Total, colors = 'Blues'
+  ) %>%
+  colorbar(title = "Total Players in NBA") %>%
+  layout(
+    title = "Total Number of Players in the NBA per State (1996-2016 Seasons)",
+    geo = g
+  )
+```
+
+**Figure 3** 
+This map shows the number of players that have been drafted in the NBA per state in the United States. It is based on a dataset that includes entries from 1996-2016 seasons. The darker the shade, the more players in the NBA from that state. When you hover over a specific state, it shows the average draft position of players from that state. Players that are "Undrafted" are filtered out. 
+
+As previously mentioned, we had filtered out the United States out of our visualizations because the high number of American participants in the NBA distorted the visualized comparison of countries with significantly less players than the United States. Because there is such a high concentration of players within the United States, we thought it would be beneficial to break it down to a state level (see “Number of Players in the NBA per State"). We found that the number of players per state ranges from 0 to 191. California had the most, followed by New York with 110 players. We noticed that the more populated states had the most players, which makes sense. In 2018, California had a total population of around 39.5 million whereas Idaho, which was the birth state of only one player, is home to 1.7 million. Because of its larger population, there is a greater likelihood that state produces more NBA players. Another aspect of the visualization that we noted was that, many of the mountain west and mid-western states had less players overall. Illinois and Michigan seemed to break that trend as mid-western states, having 102 and 73 players respectively. We assumed that this is the case because both Michigan and Illinois have large urban cities with high population density: Chicago and Detroit. 
+
+In this same visualization, we also captured the average draft position per state. As we can see with the “Average Draft Position for Country” the greater the population of the country do not have a strong connection to the average draft position. A similar phenomena is seen within the states of the US. Those states with a high number of players have draft positions in the mid twenties. Again though, with more players you could have very high drafted individuals, along with those that were lower on the list. Most states fall in the 20 position, for this reason. Alternatively, the Dakotas are both home to two players, and they have relatively high average draft positions. South Dakota has the best average, sitting in the fifth position, while North Dakota is higher in the eleventh position. The Bahamas, in terms of countries, is most similar to South Dakota with an average in the 6th position. This data about the Dakotas demonstrates that although there were only two players from the states they were relatively sought after by the league. New Hampshire, on the other hand,  also has a small number of players (only 1) but is in the 45th position. This means that even though this player from New Hampshire was drafted they were seen as less valuable. New Hampshire in this sense is similar to the country of Argentina which has had three players and also averaged around the 45th position. If were to just take this data set into consideration, and were looking for trends, we could assume that there is a better chance of finding a solid player in the Dakotas rather than in New Hampshire. 
+
+## Undrafted Element 
+
+```{r, include=FALSE}
+undrft_map
+undrft_map$hover <- with(undrft_map, paste(str_to_title(state_new), "<br>", "Total", Total ))
+  
+  
+l <- list(color = toRGB("white"), width = 2) 
+
+g <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  showlakes = TRUE,
+  lakecolor = toRGB('white'))
+```
+
+
+```{r, echo=FALSE, fig.width=10}
+plot_geo(undrft_map, locationmode = 'USA-states') %>%
+  add_trace(
+    z = ~Undrafted, text = ~hover, locations = ~code,
+    color = ~Undrafted, colors = 'Oranges'
+  ) %>%
+  colorbar(title = "Number of Undrafted Players in NBA") %>%
+  layout(
+    title = "Total Number of Undrafted Players in the NBA per State (1996-2016 Seasons)",
+    geo = g
+  )
+```
+
+
+**Figure 4** This maps shows the total number of undrafted players in the NBA per state. The map resemebles the total number of players per state Map because we found states with more players in the NBA tend to also have more undrafted players in the NBA. When you hover over a specific state, it also shows the total number of players in the NBA from that state for comparison.
+
+
+```{r, include=FALSE}
+undrft_plot <- undrft %>% 
+  ggplot(aes(x = fct_inorder(country), y = n))+
+  geom_col(aes(fill= Total))+
+  labs(title = "Number of Undrafted Players in the NBA per Country (1996-2016)", x = "Country", y = "Undrafted Players")+
+  coord_flip()
+  
+```
+
+```{r, echo=FALSE, fig.height=10.5, fig.width= 10}
+ggplotly(undrft_plot)
+```
+
+**Figure 6**
+This graph shows the number of players that are "Undrafted" per country represented in the NBA. The NBA draft consists of two rounds, each with 30 selection slots for a total of 60 picks. Undrafted refers to when a player is not slected in the draft but signs with a team as a free agent. "n" refers to the number of players that are undrafted and "Total" refers to the total number of players drafted from a given country.
+
 
 # Player Value (Points per Game)
 
@@ -241,12 +328,44 @@ pts_plot <- total_ptsAVG %>%
 ggplotly(pts_plot)
 ```
 
-**Figure 3**
+**Figure 7**
 This graph shows the average points per game of players in the NBA based on their country of origin. We used an average of points scored to examine a subjective value of players based on the country of origin. The x-axis measures the average points scored and the size of the point measures the total number of players that have played in the NBA from that country (1996-2016 seasons).
 
 This figure follows a less uniform distribution. There is a concentration around the overall mean, however there is a much longer tail towards the lower end of the distribution. On top of this there are more clear outliers as well. Germany and Senegal are unique in that they are outliers based on the number of players. Senegal had 8 players in the NBA and remains a foreign country with one of the worst point averages. Every other country with a comparably low average had only one player representing them. Germany is on the opposite end of the distribution, with one of the best point averages, yet 6 players representing them in the dataset, a high number for such an extreme.
 
 
+```{r, include=FALSE}
+pts_total_states
+pts_total_states$hover <- with(pts_total_states, paste(str_to_title(state_new), "<br>", "Total Players", Total))
+  
+  
+l <- list(color = toRGB("white"), width = 2) 
+
+g <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  showlakes = TRUE,
+  lakecolor = toRGB('white'))
+```
+
+
+```{r, echo=FALSE, fig.width=10}
+plot_geo(pts_total_states, locationmode = 'USA-states') %>%
+  add_trace(
+    z = ~avg, text = ~hover, locations = ~code,
+    color = ~avg, colors = "Greens"
+  ) %>%
+  colorbar(title = "Points per Game") %>%
+  layout(
+    title = "Average Points per Game By State (1996-2016 Seasons)",
+    geo = g
+  )
+```
+
+**Figure 8**
+This map shows the points per game of players in the NBA based on the state they are from. It is based on a dataset that includes entries from 1996-2016 seasons. The darker the shade, the greater average of points by players from that state.
+
+Another way we distinguished the value of players by state was through the average points per game in the two decades, which can be seen in our "Average Points per Game by State" visualization. When compared to the “Number of Players in the NBA per State” visualization,  interestingly enough those states with the most players do not score the most on average. The highest scoring state was Hawaii with an average of about 12 points per game. Meaning that although only one player came from Hawaii, he had an average higher than those players from the rest of the country according to their state. We can also extrapolate that he was probably a good player in general because he was the only one selected to play from his state. The one player from Hawaii scored on average the same as those from other nations like Italy, Serbia/Montenegro, and Spain who average score 11.9 points per game. One of the lowest averaging states was New Mexico, with an average of only 2.97 points per game, which is similar to the players from the countries of Austria and Senegal. 
 
 
 # Acknowledgments
