@@ -312,6 +312,8 @@ ggplotly(undrft_plot)
 **Figure 6**
 This graph shows the number of players that are "Undrafted" per country represented in the NBA. The NBA draft consists of two rounds, each with 30 selection slots for a total of 60 picks. Undrafted refers to when a player is not slected in the draft but signs with a team as a free agent. "n" refers to the number of players that are undrafted and "Total" refers to the total number of players drafted from a given country.
 
+Although the “Number of Players in the NBA per State" and “Total Number of Undrafted Players” looks similar (with the same states in dark colors), they demonstrate different variables. This differs from the “Number of Undrafted Players in the NBA by Country” visualization where number of players doesn’t seem to have a huge affect on the number of undrafted players. However, the correlation between these two visualizations in the United States makes sense because there is a much higher total number of players per state and you would expect that with more players in general a greater number would be undrafted. Many of the states with few players don’t have any undrafted players like Alaska and Idaho. Those players from the smaller states must have been sought after in their league, and stood out in their state. Interestingly, the player from Hawaii who has a very high point scoring average (see “Average Points Per Game”) was not initially drafted into the NBA but was signed as a free agent. This demonstrates that even if a player is not drafted, it does not mean they are not valuable. 
+
 
 # Player Value (Points per Game)
 
