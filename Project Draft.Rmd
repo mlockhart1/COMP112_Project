@@ -5,7 +5,7 @@ date: "12/2/2019"
 output: html_document
 ---
 
-# THE NBA 
+# THE NBA
 
 We decided to center our project around the NBA, also known as the National Basketball Association. The association was founded in June 1946, and is now widely considered to be the premier men's professional basketball league in the world. In the United States and Canada it is one of the four major professional sports leagues, which also includes Major League Baseball, the National Hockey League, and the National Football League. The NBA has a regular season that runs from October to April, during which each of the 30 teams playing 82 games. The NBA players are also some of the world's best paid athletes by average annual salary.
 
