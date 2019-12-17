@@ -58,6 +58,16 @@ pts_state <- all_seasons %>%
 ```
 
 ```{r, include=FALSE}
+totalp <- all_seasons %>% 
+  left_join(NBA_Players_birthplace, by = c( "player_name" = "Player")) %>% 
+  mutate(state_new = tolower(ifelse(State=="DC", "district of columbia", State))) %>% 
+  distinct(player_name,.keep_all = TRUE) %>% 
+  group_by(state_new) %>% 
+  filter(state_new != "NA") %>% 
+  summarise(Total = n())
+```
+
+```{r, include=FALSE}
 state_data <- tibble(name = str_to_lower(state.name), 
                      code = state.abb) 
 
@@ -66,15 +76,19 @@ total_states <- all_seasons %>%
   mutate(state_new = tolower(ifelse(State=="DC", "district of columbia", State))) %>% 
   distinct(player_name,.keep_all = TRUE) %>% 
   group_by(state_new) %>% 
-  summarise(total = n()) %>% 
+  filter(draft_number != "Undrafted")  %>% 
+  mutate(draft_pos = as.numeric(draft_number)) %>% 
+  summarise(Avg = mean(draft_pos)) %>% 
   filter(state_new != "NA") %>% 
   left_join(state_data, by= c("state_new" = "name")) %>% 
-  mutate(code= ifelse(state_new== "district of columbia", "DC", code))
+  mutate(code= ifelse(state_new== "district of columbia", "DC", code)) %>% 
+  left_join(totalp, by = "state_new")
 ```
+
 
 ```{r, include=FALSE}
 total_states
-
+total_states$hover <- with(total_states, paste(str_to_title(state_new), "<br>", "Average Draft Position", Avg ))
   
   
 l <- list(color = toRGB("white"), width = 2) 
@@ -86,15 +100,16 @@ g <- list(
   lakecolor = toRGB('white'))
 ```
 
+
 ```{r, echo=FALSE, fig.width=10}
 plot_geo(total_states, locationmode = 'USA-states') %>%
   add_trace(
-    z = ~total, text = ~str_to_title(state_new), locations = ~code,
-    color = ~total, colors = 'Blues'
+    z = ~Total, text = ~hover, locations = ~code,
+    color = ~Total, colors = 'Blues'
   ) %>%
-  colorbar(title = "Number of Players") %>%
+  colorbar(title = "Total Players in NBA") %>%
   layout(
-    title = "Number of Players in the NBA per State (1996-2016 Seasons)",
+    title = "Total Number of Players in the NBA per State (1996-2016 Seasons)",
     geo = g
   )
 ```
@@ -103,7 +118,7 @@ plot_geo(total_states, locationmode = 'USA-states') %>%
 
 
 **Figure 1** 
-This map shows the number of players that have played in the NBA per state in the United States. It is based on a dataset that includes entries from 1996-2016 seasons. The darker the shade, the more players in the NBA from that state. 
+This map shows the number of players that have been drafted in the NBA per state in the United States. It is based on a dataset that includes entries from 1996-2016 seasons. The darker the shade, the more players in the NBA from that state. When you hover over a specific state, it shows the average draft position of players from that state. Players that are "Undrafted" are filtered out. 
 
 
 
@@ -115,7 +130,7 @@ pts_total_states <- pts_state %>%
 
 ```{r, include=FALSE}
 pts_total_states
-pts_total_states$hover <- with(pts_total_states, paste(str_to_title(state_new), "<br>", "Total Players", total))
+pts_total_states$hover <- with(pts_total_states, paste(str_to_title(state_new), "<br>", "Total Players", Total))
   
   
 l <- list(color = toRGB("white"), width = 2) 
@@ -144,8 +159,67 @@ plot_geo(pts_total_states, locationmode = 'USA-states') %>%
 
 
 
+
 **Figure 2**
 This map shows the points per game of players in the NBA based on the state they are from. It is based on a dataset that includes entries from 1996-2016 seasons. The darker the shade, the greater average of points by players from that state.
+
+
+
+
+```{r, include=FALSE}
+state_data <- tibble(name = str_to_lower(state.name), 
+                     code = state.abb) 
+
+undrft_map <- all_seasons %>% 
+  left_join(NBA_Players_birthplace, by = c( "player_name" = "Player")) %>% 
+  mutate(state_new = tolower(ifelse(State=="DC", "district of columbia", State))) %>% 
+  distinct(player_name,.keep_all = TRUE) %>% 
+  group_by(state_new) %>% 
+  filter(draft_number == "Undrafted")  %>% 
+  summarise(Undrafted = n()) %>% 
+  filter(state_new != "NA") %>% 
+  left_join(state_data, by= c("state_new" = "name")) %>% 
+  mutate(code= ifelse(state_new== "district of columbia", "DC", code)) %>% 
+  left_join(totalp, by = "state_new")
+```
+
+```{r, include=FALSE}
+undrft_map
+undrft_map$hover <- with(undrft_map, paste(str_to_title(state_new), "<br>", "Total", Total ))
+  
+  
+l <- list(color = toRGB("white"), width = 2) 
+
+g <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  showlakes = TRUE,
+  lakecolor = toRGB('white'))
+```
+
+
+```{r, echo=FALSE, fig.width=10}
+plot_geo(undrft_map, locationmode = 'USA-states') %>%
+  add_trace(
+    z = ~Undrafted, text = ~hover, locations = ~code,
+    color = ~Undrafted, colors = 'Oranges'
+  ) %>%
+  colorbar(title = "Number of Undrafted Players in NBA") %>%
+  layout(
+    title = "Total Number of Undrafted Players in the NBA per State (1996-2016 Seasons)",
+    geo = g
+  )
+```
+
+
+
+
+**Figure 3** This maps shows the total number of undrafted players in the NBA per state. The map resemebles the total number of players per state Map because we found states with more players in the NBA tend to also have more undrafted players in the NBA. When you hover over a specific state, it also shows the total number of players in the NBA from that state for comparison. 
+
+
+
+
+
 
 ```{r, include=FALSE}
 dist_countries <- all_seasons %>% 
@@ -170,7 +244,7 @@ ggplotly(total_countries)
 
 
 
-**Figure 3** 
+**Figure 4** 
 This graph illustrates the total number of countries represented in the NBA. Representation is based on the country of origin of players in the NBA. The dataset is comprised of entries from the 1996-2016 seasons.
 
 
@@ -204,13 +278,15 @@ undrft_plot <- undrft %>%
 ggplotly(undrft_plot)
 ```
 
-**Figure 4**
+**Figure 5**
 This graph shows the number of players that are "Undrafted" per country represented in the NBA. The NBA draft consists of two rounds, each with 30 selection slots for a total of 60 picks. Undrafted refers to when a player is not slected in the draft but signs with a team as a free agent. "n" refers to the number of players that are undrafted and "Total" refers to the total number of players drafted from a given country.
+
+
+
 
 ```{r, fig.height= 10, fig.width= 8, include=FALSE}
 country_mean <- dist_players%>% 
   filter(country != "USA") %>% 
-  filter(draft_number != "undrafted") %>% 
   filter(draft_number != "Undrafted") %>% 
   mutate(draft_pos = as.numeric(draft_number)) %>% 
   group_by(country) %>%  
@@ -233,7 +309,7 @@ ggplotly(plot)
 
 
 
-**Figure 5**
+**Figure 6**
 This graph shows the average draft position of players selected in the NBA draft based on their country of origin. We used draft position to examine a subjective value of players based on the country of origin. X-axis measures the draft position and the size of the point measures the total number of players that have played in the NBA from that country (1996-2016 seasons). The NBA draft consists of two rounds, each with 30 selection slots for a total of 60 picks. The lower the number of the selection slot, the more valuable the player is viewed.   
 
 
@@ -276,7 +352,7 @@ ggplotly(pts_plot)
 
 
 
-**Figure 6**
+**Figure 7**
 This graph shows the average points per game of players in the NBA based on their country of origin. We used an average of points scored to examine a subjective value of players based on the country of origin. The x-axis measures the average points scored and the size of the point measures the total number of players that have played in the NBA from that country (1996-2016 seasons).
 
 
