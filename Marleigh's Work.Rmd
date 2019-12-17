@@ -65,11 +65,40 @@ new
 
 ```{r}
 salary_new <-new %>% 
-  full_join(player_salary, by=c("_id"="player_id"))
+  inner_join(player_salary, by=c("_id"="player_id"))
 
 salary_new
 ```
 
+```{r}
+salary_new %>% 
+  filter(season_end == 2001)
+   arrange(salary)
+```
+
+
+```{r}
+dist_countries <- all_seasons %>% 
+  group_by(season) %>% 
+  distinct(country) %>% 
+  count(country) %>% 
+  summarise(total_countries = sum(n))
+ 
+  ggplot(dist_countries)+
+  geom_col(aes(x = season, y = total_countries))+
+  coord_flip()+
+  labs(title = "Number of Countries Represented in the NBA per Season", x = "Total Number of Countries", y = "NBA Season") 
+```
+
+
+```{r}
+total_countries <- ggplot(dist_countries, aes(x = season, y = total_countries))+
+  geom_col()+
+  coord_flip()+
+  labs(title = "Number of Countries Represented in the NBA per Season", x = "Total Number of Countries", y = "NBA Season") 
+  
+ggplotly(total_countries)
+```
 
 
 
