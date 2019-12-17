@@ -5,26 +5,29 @@ date: "12/2/2019"
 output: html_document
 ---
 
+
+
 # Background 
+
 
 We decided to center our project around the NBA, also known as the National Basketball Association. The association was founded in June 1946, and is now widely considered to be the premier men's professional basketball league in the world. In the United States and Canada it is one of the four major professional sports leagues, which also includes Major League Baseball, the National Hockey League, and the National Football League. The NBA has a regular season that runs from October to April, during which each of the 30 teams playing 82 games. The NBA players are also some of the world's best paid athletes by average annual salary.
 
 From the beginning of the project, we knew that we wanted to focus on some aspect of the sport world. We realized that in the common vernacular, we hear most about statistics and visualizations when talking about sports. In terms of content, there are hundreds of television and radio programs, magazines, video games, and hundreds of thousands of Internet sites that are primarily focused on sports, Sports are also unique in the fact that they capture the attention of the public on an ongoing basis, and remain in the public sphere. Sports in general are significant to people across the nation and world wide. More generally they provide resources for the construction of "a meaningful social life in relation to a changing societal environment that has the potential to destabilize and threaten these things". Many people in their free time look up sports “stats” because they are emotionally invested in a team or are participating in fantasy leagues. As Robert V. Bellamy Jr., author of the article "Sports Media: A Modern Institution", put it sports have the ability to cross "international and intercultural boundaries despite differences in language and both written and visual literacy" and this is because "game and competition culture essentially is universal.” One does not have to understand all of the rules and strategies to understand the basic point of the game. On an individual level sports have also impacted our lives in a variety of ways. 
 
-From a data science standpoint we wanted to understand the significance of sports in general and how the coding we learned in class could help us understand trends and maybe make predictions. We ended up focusing primarily on the NBA with the majority of our data came from three data sets called “all_seasons”, “nbaStats”, and "NBA Players by State". The "all_seasons" data set contains two decades (1996-2016) of data on each player who has been part of a team's roster. It illustrates demographic variables such as age, height, weight and country of origin. It also capture biographical details like the team they played for, draft year and round. In addition, it also demonstrates statistics like games played, average number of points, rebounds, assists, etc. "nbaStats" looks at player's status, position, label, as well as other various statistics from 2017 (WHAT YEARS??). "NBA Players by State" was mostly useful as it had the states domestic players were born in. It also provided other statistics like the number of years play. Overall we wanted to understand what role geographic location played in the NBA on a state level as well as on an international scale. With the data avalibale, we created some guiding questions that would help us in our analysis:   
+From a data science standpoint we wanted to understand the significance of sports in general and how the coding we learned in class could help us understand trends and maybe make predictions. We ended up focusing primarily on the NBA with the majority of our data came from three data sets called “all_seasons”, “nbaStats”, and "NBA Players by State". The "all_seasons" data set contains two decades (1996-2016) of data on each player who has been part of a team's roster. It illustrates demographic variables such as age, height, weight and country of origin. It also capture biographical details like the team they played for, draft year and round. In addition, it also demonstrates statistics like games played, average number of points, rebounds, assists, etc. "nbaStats" looks at player's status, position, label, as well as other various statistics from 1996 to 2016. "NBA Players by State" was mostly useful as it had the states domestic players were born in. It also provided other statistics like the number of years play. We wanted to understand how players were valued overall and what role geographic location played in the NBA on a state level as well as on an international scale. We used variables like draft position, number of undrafted players, total of players from state/country, and average points scored. With the data avalibale, we created some guiding questions that would help us in our analysis:   
 
 **Guiding Questions** 
 
 * What trends can we see in relation to geography/demographics in terms of the United States and the world?
 
-* Which states have the most players? And which states contribute the highest scores? (Games Played is the variable used to measure the composition of the league)
+* Which states have the most players? And which states contribute the highest scores? 
 
 * Outside of the United States which countries/continents contribute the most players? 
 
 
 Even though we found significant data sets there were limitations. For one, the data from "all_seasons" only had the years from 1996 to 2016, so we were limited in our analysis. Even though on a large scale more data from years before 1996 would have been useful, twenty years worth of components were difficult to compare. We couldn't really facet our visualizations to show changes over time without simplying the results and leaving variables out. The data sets also only included players from the NBA and not from the minor league or the WNBA. In general our topic was made difficult because it was so popular. A lot of data sets that would have been helpful to create visualizations were monetized, and therefore inaccessible to us. We included the data in our written analysis, but were unable to demonstrate the findings in helpful visualization. For example, we could not find any data sets that had international viewership.
 
-
+Could also talk about how birth state might not actually be home state, people move.
 
 # Analysis
 
@@ -40,7 +43,7 @@ We then looked into the how many points were scored on average in the years 1996
 
 Add more of a transition into international visualizations and more about the visualization in general.
 
-  As our data has shown, the NBA has overall increased its international players since 1996. Though our data does not feature the 2017-18 and 2019-20 years, we found that in 2017-18 there were 42 countries represented and this number fell to 38 countries and territories for the 2019-20 season. For this 2019-20 it was noted that the most-represented countries were from Canada with 16 players, followed by Australia, France, Croatia, and Serbia respectively.  Canada saw a record six players selected in the NBA Draft 2019, surpassing the previous record for most draftees from a non-U.S. country which was five set by France in 2016. In our “Average Draft Position of Players per Country” visualization the two largest points are held by France and Canada demonstrating that they have the highest number of total players from the 1996-2016 seasons. Therefore, the data from the NBA Draft 2019 makes sense with our findings.  
+  As our data has shown, the NBA has overall increased its international players since 1996. Though our data does not feature the 2017-18 and 2019-20 years, we found that in 2017-18 there were 42 countries represented and this number fell to 38 countries and territories for the 2019-20 season. For this 2019-20 it was noted that the most-represented countries were from Canada with 16 players, followed by Australia, France, Croatia, and Serbia respectively. Canada saw a record six players selected in the NBA Draft 2019, surpassing the previous record for most draftees from a non-U.S. country which was five set by France in 2016. In our “Average Draft Position of Players per Country” visualization the two largest points are held by France and Canada demonstrating that they have the highest number of total players from the 1996-2016 seasons. Therefore, the data from the NBA Draft 2019 makes sense with our findings.  
 
   We noticed that there was a significant increase in international players following 2000, and we wanted to explore why. We found that in 2000 the NBA had established a focus on their international outreach and created the program Basketball Without Borders (BWB). Basketball without Borders aims to “unite young basketball players to promote the sport and encourage positive social change in the areas of education, health, and wellness.” The organization brings in NBA players and coaches to train the top youth players from Asia, Europe, Latin America and Africa. Since its foundation this organization has reached more than 3,000 participants in 24 cities in 20 countries on 5 continents. Most impressively, 37 former Basketball Without Borders campers drafted into the NBA.
 
@@ -69,6 +72,8 @@ The data is more complex than it seems. Even if states have more players, it doe
 
 There are many other avenues that could be explore through the data we have collected and the visualizations we created. If we were to further this project, We could thought that comparing the information we collected to other major league sports could produce interesting results or creating visualizations that compare our variables to those from the Women's National Basketball Association. 
 We also would want to look into the factors that might explain why certain geographical areas receive the most players. We could look at if certain states have better facilities for players or have more funding. 
+
+INCORPORATE: Could have also looked at how many games was played and minutes played 
 
 
 
