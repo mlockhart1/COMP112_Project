@@ -1,6 +1,6 @@
 ---
 title: "Demographic Composition the NBA From 1996-2016 Seasons"
-author: "Michael Lockhart"
+author: "Michael Lockhart, Isaiah Agnew, Marleigh Jenkins-Morse"
 date: "12/17/2019"
 output: html_document
 ---
@@ -195,7 +195,7 @@ This graph illustrates the total number of countries represented in the NBA. Rep
 
 In the past 2 decades we have seen a drastic rise in the number of countries represented in the NBA. In 1996, players from 9 countries competed for the NBA championship. That number rose to an all time high of 44 in the 2005 season, an increase of nearly 500% in less than a decade. Representation has since settled in the high 30s and low 40s, finishing out the 2010s with 38 countries in the 2019-2020 season. What we hoped to accomplish with our analysis of the data was an exploration of the different ways this growth has played out for each represented country.
 
-The Figure 1 was derived from the “all_seasons” dataset which spans 20 years of NBA seasons beginning in 1996 and ending in 2016. For this visualization we focused specifically on the country and year variables. The bar graph shows the number of countries represented for every year in the 2 decades included in the dataset. For all datasets concerning foreign countries, we filtered out the US. This is because, although the number of foreign players has risen, they still only make up roughly 75% of players in the NBA. As a result, including the US in our plots would severely skew our data. However, given the prominence of US representation, we later explored the influence of US geography on the performance of players in the NBA.
+The Figure 1 was derived from the “all_seasons” dataset which spans 20 years of NBA seasons beginning in 1996 and ending in 2016. For this visualization we focused specifically on the country and year variables. The bar graph shows the number of countries represented for every year in the 2 decades included in the dataset. For all datasets concerning foreign countries, we filtered out the US. This is because, although the number of foreign players has risen, they still only make up roughly 25% of players in the NBA. As a result, including the US in our plots would severely skew our data. However, given the prominence of US representation, we later explored the influence of US geography on the performance of players in the NBA.
 
 The growth in foreign representation was most prominent between 1996 and 2005, the aforementioned highpoint for representation. The largest increase between seasons occurred between the 1999 season and the 2000 season. In our search for an explanation for this leap, we found that in 2000 the NBA established a focus on their international outreach and created the program Basketball Without Borders (BWB). Basketball without Borders aims to “unite young basketball players to promote the sport and encourage positive social change in the areas of education, health, and wellness.” The organization brings in NBA players and coaches to train the top youth players from Asia, Europe, Latin America and Africa. Since its foundation this organization has reached more than 3,000 participants in 24 cities in 20 countries on 5 continents. Most impressively, 37 former Basketball Without Borders campers drafted into the NBA. Basketball Without Borders is an example of one of the many stories that contribute to such a significant shift in an international phenomenon such as the NBA. 
 
@@ -380,8 +380,7 @@ Even though we found significant data sets there were limitations. For one, the 
 
 There are many other avenues that could be explore through the data we have collected and the visualizations we created. If we were to further this project, we could look at other ways athletes are valued like how many games they played, how many minutes they played, or even how much money they made in a season. It could also be useful to visualize the information we collected as compared to other major league sports like the NHL, the NFL, or the Women's National Basketball Association. We also would want to look into the factors that might explain why certain geographical areas receive the most players. Number of facilities for players, funding, and sports education would probably be the varibles we would start with. 
 
-Different values of players, rise of new countries, and there were be a rise and value. 
-
+Through this project we wanted to understand and demonstrate the correlation between players perceived value and their demographics in terms of place of origin. We used variables like draft position, number of undrafted players, total of players from state/country, and average points scored to capture this perceived value and their birth place to measure the demographics. The United States has the most players by far so in that regard they are seen as most valued, but when looking at the averages of draft position and points scored, other countries also bode well. With the rise in participation from other countries, and the growth in overall international importance of the NBA we can assume that the perceived value of international players will also increase. 
 
 #### Sources
 * https://www.nba.com/article/2019/10/22/nba-rosters-feature-108-international-players-2019-20
