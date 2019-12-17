@@ -380,7 +380,7 @@ Even though we found significant data sets there were limitations. For one, the 
 
 There are many other avenues that could be explore through the data we have collected and the visualizations we created. If we were to further this project, we could look at other ways athletes are valued like how many games they played, how many minutes they played, or even how much money they made in a season. It could also be useful to visualize the information we collected as compared to other major league sports like the NHL, the NFL, or the Women's National Basketball Association. We also would want to look into the factors that might explain why certain geographical areas receive the most players. Number of facilities for players, funding, and sports education would probably be the varibles we would start with. 
 
-
+Different values of players, rise of new countries, and there were be a rise and value. 
 
 
 #### Sources
