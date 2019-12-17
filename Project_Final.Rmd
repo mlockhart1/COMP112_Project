@@ -1,0 +1,259 @@
+---
+title: "Demographic Composition the NBA From 1996-2016 Seasons"
+author: "Michael Lockhart"
+date: "12/17/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message=FALSE, include=FALSE}
+library(readr)
+library(tidyverse)
+library(readxl)
+library(maps)
+library(ggthemes)
+library(ggmap)
+library(ggplot2)
+library(lubridate)
+library(babynames)
+library(plotly)
+library(gganimate) 
+library(gifski) 
+```
+
+```{r, message=FALSE, include=FALSE}
+all_seasons <- read_csv("all_seasons.csv")
+```
+
+```{r, message=FALSE, include=FALSE}
+nbaStats <- read_csv("nbaStats.csv")
+```
+
+```{r, message=FALSE, include=FALSE}
+NBA_Players_by_State <- read_excel("NBA Players by State.xlsx") %>% 
+  mutate(State= ifelse(State== "Washingon", "Washington", State))
+```
+
+```{r, include=FALSE}
+NBA_Players_birthplace <- NBA_Players_by_State %>% 
+  select(Player, Date, City, State)
+```
+
+```{r, include=FALSE}
+dist_players <- all_seasons %>% 
+distinct(player_name,.keep_all = TRUE) %>% 
+  select(player_name, country, draft_number)
+```
+
+```{r, include=FALSE}
+pts_state <- all_seasons %>% 
+  left_join(NBA_Players_birthplace, by = c( "player_name" = "Player")) %>% 
+  mutate(state_new = tolower(ifelse(State=="DC", "district of columbia", State))) %>% 
+  group_by(state_new) %>% 
+  summarise(avg = mean(pts)) %>% 
+  filter(state_new != "NA")
+```
+
+```{r, include=FALSE}
+totalp <- all_seasons %>% 
+  left_join(NBA_Players_birthplace, by = c( "player_name" = "Player")) %>% 
+  mutate(state_new = tolower(ifelse(State=="DC", "district of columbia", State))) %>% 
+  distinct(player_name,.keep_all = TRUE) %>% 
+  group_by(state_new) %>% 
+  filter(state_new != "NA") %>% 
+  summarise(Total = n())
+```
+
+```{r, include=FALSE}
+state_data <- tibble(name = str_to_lower(state.name), 
+                     code = state.abb) 
+
+total_states <- all_seasons %>% 
+  left_join(NBA_Players_birthplace, by = c( "player_name" = "Player")) %>% 
+  mutate(state_new = tolower(ifelse(State=="DC", "district of columbia", State))) %>% 
+  distinct(player_name,.keep_all = TRUE) %>% 
+  group_by(state_new) %>% 
+  filter(draft_number != "Undrafted")  %>% 
+  mutate(draft_pos = as.numeric(draft_number)) %>% 
+  summarise(Avg = mean(draft_pos)) %>% 
+  filter(state_new != "NA") %>% 
+  left_join(state_data, by= c("state_new" = "name")) %>% 
+  mutate(code= ifelse(state_new== "district of columbia", "DC", code)) %>% 
+  left_join(totalp, by = "state_new")
+```
+
+```{r, include=FALSE}
+pts_total_states <- pts_state %>% 
+  left_join(total_states, by = "state_new")
+```
+
+```{r, include=FALSE}
+state_data <- tibble(name = str_to_lower(state.name), 
+                     code = state.abb) 
+
+undrft_map <- all_seasons %>% 
+  left_join(NBA_Players_birthplace, by = c( "player_name" = "Player")) %>% 
+  mutate(state_new = tolower(ifelse(State=="DC", "district of columbia", State))) %>% 
+  distinct(player_name,.keep_all = TRUE) %>% 
+  group_by(state_new) %>% 
+  filter(draft_number == "Undrafted")  %>% 
+  summarise(Undrafted = n()) %>% 
+  filter(state_new != "NA") %>% 
+  left_join(state_data, by= c("state_new" = "name")) %>% 
+  mutate(code= ifelse(state_new== "district of columbia", "DC", code)) %>% 
+  left_join(totalp, by = "state_new")
+```
+
+```{r, include=FALSE}
+dist_countries <- all_seasons %>% 
+  group_by(season) %>% 
+  distinct(country) %>% 
+  count(country) %>% 
+  summarise(total_countries = sum(n)) 
+```
+
+```{r, include=FALSE}
+Ttl <- dist_players %>% 
+  group_by(country) %>% 
+  summarise(Total = n())
+```
+
+```{r, include=FALSE}
+undrft <- dist_players %>% 
+  group_by(country) %>% 
+  filter(draft_number == "Undrafted", country != "USA") %>% 
+  count(draft_number) %>% 
+  left_join(Ttl, by = "country") %>% 
+  arrange(desc(Total))
+```
+
+```{r, fig.height= 10, fig.width= 8, include=FALSE}
+country_mean <- dist_players%>% 
+  filter(country != "USA") %>% 
+  filter(draft_number != "Undrafted") %>% 
+  mutate(draft_pos = as.numeric(draft_number)) %>% 
+  group_by(country) %>%  
+  summarize(mean = mean(draft_pos), total = n()) %>%
+  arrange(desc(mean))
+```
+
+```{r, include=FALSE}
+pts_country <- all_seasons %>% 
+  group_by(country) %>% 
+  summarise(avg = mean(pts))
+
+```
+
+```{r, include=FALSE}
+total_players <- dist_players %>% 
+  group_by(country) %>% 
+  summarise(total = n()) %>% 
+  filter(country != "USA", country != "U.S. Virgin Islands")
+
+```
+
+```{r, include= FALSE}
+total_ptsAVG <- pts_country %>% 
+  left_join(total_players, by = "country") %>% 
+  filter(country != "U.S. Virgin Islands") %>% 
+  arrange(desc(avg))
+
+ 
+```
+
+
+# Background 
+
+
+We decided to center our project around the NBA, also known as the National Basketball Association. The association was founded in June 1946, and is now widely considered to be the premier men's professional basketball league in the world. In the United States and Canada it is one of the four major professional sports leagues, which also includes Major League Baseball, the National Hockey League, and the National Football League. The NBA has a regular season that runs from October to April, during which each of the 30 teams playing 82 games. The NBA players are also some of the world's best paid athletes by average annual salary.
+
+From the beginning of the project, we knew that we wanted to focus on some aspect of the sport world. We realized that in the common vernacular, we hear most about statistics and visualizations when talking about sports. In terms of content, there are hundreds of television and radio programs, magazines, video games, and hundreds of thousands of Internet sites that are primarily focused on sports, Sports are also unique in the fact that they capture the attention of the public on an ongoing basis, and remain in the public sphere. Sports in general are significant to people across the nation and world wide. More generally they provide resources for the construction of "a meaningful social life in relation to a changing societal environment that has the potential to destabilize and threaten these things". Many people in their free time look up sports “stats” because they are emotionally invested in a team or are participating in fantasy leagues. As Robert V. Bellamy Jr., author of the article "Sports Media: A Modern Institution", put it sports have the ability to cross "international and intercultural boundaries despite differences in language and both written and visual literacy" and this is because "game and competition culture essentially is universal.” One does not have to understand all of the rules and strategies to understand the basic point of the game. On an individual level sports have also impacted our lives in a variety of ways. 
+
+From a data science standpoint we wanted to understand the significance of sports in general and how the coding we learned in class could help us understand trends and maybe make predictions. We ended up focusing primarily on the NBA with the majority of our data came from three data sets called “all_seasons”, “nbaStats”, and "NBA Players by State". The "all_seasons" data set contains two decades (1996-2016) of data on each player who has been part of a team's roster. It illustrates demographic variables such as age, height, weight and country of origin. It also capture biographical details like the team they played for, draft year and round. In addition, it also demonstrates statistics like games played, average number of points, rebounds, assists, etc. "nbaStats" looks at player's status, position, label, as well as other various statistics from 1996 to 2016. "NBA Players by State" was mostly useful as it had the states domestic players were born in. It also provided other statistics like the number of years play. We wanted to understand how players were valued overall and what role geographic location played in the NBA on a state level as well as on an international scale. We used variables like draft position, number of undrafted players, total of players from state/country, and average points scored. With the data avalibale, we created some guiding questions that would help us in our analysis:  \
+
+
+# Foreign Country Representation in the NBA
+
+```{r, include=FALSE}
+  total_countries <- ggplot(dist_countries, aes(x = season, y = total_countries))+
+  geom_col(aes(fill = "coral1"))+
+  theme(legend.position = "none") +
+  coord_flip()+
+  labs(title = "Number of Countries Represented in the NBA per Season (1996-2016)", x = "NBA Season" , y = "Total Number of Countries") 
+```
+
+```{r, echo=FALSE, fig.width=10}
+ggplotly(total_countries) 
+```
+
+**Figure 1** 
+This graph illustrates the total number of countries represented in the NBA. Representation is based on the country of origin of players in the NBA. The dataset is comprised of entries from the 1996-2016 seasons.
+
+
+In the past 2 decades we have seen a drastic rise in the number of countries represented in the NBA. In 1996, players from 9 countries competed for the NBA championship. That number rose to an all time high of 44 in the 2005 season, an increase of nearly 500% in less than a decade. Representation has since settled in the high 30s and low 40s, finishing out the 2010s with 38 countries in the 2019-2020 season. What we hoped to accomplish with our analysis of the data was an exploration of the different ways this growth has played out for each represented country.
+
+The Figure 1 was derived from the “all_seasons” dataset which spans 20 years of NBA seasons beginning in 1996 and ending in 2016. For this visualization we focused specifically on the country and year variables. The bar graph shows the number of countries represented for every year in the 2 decades included in the dataset. For all datasets concerning foreign countries, we filtered out the US. This is because, although the number of foreign players has risen, they still only make up roughly 75% of players in the NBA. As a result, including the US in our plots would severely skew our data. However, given the prominence of US representation, we later explored the influence of US geography on the performance of players in the NBA.
+
+The growth in foreign representation was most prominent between 1996 and 2005, the aforementioned highpoint for representation. The largest increase between seasons occurred between the 1999 season and the 2000 season. In our search for an explanation for this leap, we found that in 2000 the NBA established a focus on their international outreach and created the program Basketball Without Borders (BWB). Basketball without Borders aims to “unite young basketball players to promote the sport and encourage positive social change in the areas of education, health, and wellness.” The organization brings in NBA players and coaches to train the top youth players from Asia, Europe, Latin America and Africa. Since its foundation this organization has reached more than 3,000 participants in 24 cities in 20 countries on 5 continents. Most impressively, 37 former Basketball Without Borders campers drafted into the NBA. Basketball Without Borders is an example of one of the many stories that contribute to such a significant shift in an international phenomenon such as the NBA. 
+
+# Player Value (Draft Position) 
+
+Following our findings from Figure 1, we explored the correlation of the origin countries of players in the NBA to their assigned value as basketball players. We wanted to look not just at where a player came from, but further into how their origin affected their perceived value. Out  of all the variables present in the all_seasons dataset, draft position did a great job at directly representing the assigned value of a player in the NBA. Our next visualization shows the correlation between birth country and draft position. 
+
+```{r, fig.height= 10, fig.width= 8, include=FALSE}
+plot <- country_mean %>%   
+  ggplot(aes(x=fct_inorder(country), y=mean)) +
+ geom_point(aes(size = total, fill = "coral1"))+
+  theme(legend.position = "none") +
+  coord_flip()+
+  labs(title = "Average Draft Position of Players per Country (1996-2016)",  x= "Country", y= "Average Draft Position")
+
+```
+
+```{r, fig.height=10, fig.width=10, echo=FALSE}
+ggplotly(plot)
+```
+
+
+**Figure 2**
+This graph shows the average draft position of players selected in the NBA draft based on their country of origin. We used draft position to examine a subjective value of players based on the country of origin. X-axis measures the draft position and the size of the point measures the total number of players that have played in the NBA from that country (1996-2016 seasons). The NBA draft consists of two rounds, each with 30 selection slots for a total of 60 picks. The lower the number of the selection slot, the more valuable the player is viewed.
+
+
+In order to achieve a comprehensive and understandable representation of the data, this visualization deals with the average draft position for each country. The averages are plotted against their corresponding countries in a point plot, which includes the number of players representing each country as the size of the points on the plot. There are many cases in which a country was only represented by one player in the 2 decades covered by the dataset, so it was important to include the sample size for draft position averages. It quickly became apparent that this was necessary as the US Virgin Islands were the only country with an average draft position of 1. This can be attributed to Tim Duncan, who is often referred to as one of the greatest NBA players of all time and one of the few players to represent the Virgin Islands in the history of the NBA. His career began in 1997 and continued through 2015, nearly exactly the span of the all_seasons dataset. One would expect countries at the extremes of the draft position distribution to have smaller sample size of players, and this is true for the plot.
+	
+Figure 2 reveals that foreign born NBA players are distributed across all draft positions and follow a roughly standard distribution centered around the expected draft mean. There are no notable outliers, however there is a slight concentration of better represented countries towards the lower end of the distribution. This would suggest there is a slight correlation between better representation and higher draft position averages, but regardless it is a subtle relationship.
+
+# Player Value (Points per Game)
+
+Draft position average is a great measurement of a players valued potential, however, potential doesn’t always line up with their performance on court. We decided to further support the correlation between origin country and player performance based on something more tangible. The all_seasons dataset includes a variable that measures the average points per game of every player. To contextualize this within the player’s countries of origin, we took the average of this value across all players from each country. This point plot is constructed with the same representation of sample size as the last figure, which maintains its importance in this visualization as well. The resulting figure shows us The average points per game by country accompanied with the number of players representing each country.
+
+```{r, fig.height=12, fig.width=10, echo=FALSE}
+pts_plot <- total_ptsAVG %>% 
+  ggplot(aes(x= fct_inorder(country), y= avg)) +
+  geom_point(aes(size = total, fill = "coral1"))+
+  theme(legend.position = "none") +
+  coord_flip()+
+  labs(title = "Average Points per Game By Country (1996-2016)", x= "Country", y= "Average Points per Game" )
+
+ggplotly(pts_plot)
+```
+
+**Figure 3**
+This graph shows the average points per game of players in the NBA based on their country of origin. We used an average of points scored to examine a subjective value of players based on the country of origin. The x-axis measures the average points scored and the size of the point measures the total number of players that have played in the NBA from that country (1996-2016 seasons).
+
+This figure follows a less uniform distribution. There is a concentration around the overall mean, however there is a much longer tail towards the lower end of the distribution. On top of this there are more clear outliers as well. Germany and Senegal are unique in that they are outliers based on the number of players. Senegal had 8 players in the NBA and remains a foreign country with one of the worst point averages. Every other country with a comparably low average had only one player representing them. Germany is on the opposite end of the distribution, with one of the best point averages, yet 6 players representing them in the dataset, a high number for such an extreme.
+
+
+
+
+# Acknowledgments
+
+#### Sources
+* https://www.nba.com/article/2019/10/22/nba-rosters-feature-108-international-players-2019-20
+* http://global.nba.com/basketball-without-borders/
+* https://cares.nba.com/international/
+* https://flowingdata.com/2014/05/13/nba-fans-by-zip-code/
+* https://www.sportsrec.com/8127260/what-is-the-importance-of-sports-in-our-lives
