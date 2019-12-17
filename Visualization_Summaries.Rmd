@@ -179,7 +179,7 @@ This graph illustrates the total number of countries represented in the NBA. Rep
 ```{r, include=FALSE}
 Ttl <- dist_players %>% 
   group_by(country) %>% 
-  summarise(total = n())
+  summarise(Total = n())
 ```
 
 ```{r, include=FALSE}
@@ -188,13 +188,13 @@ undrft <- dist_players %>%
   filter(draft_number == "Undrafted", country != "USA") %>% 
   count(draft_number) %>% 
   left_join(Ttl, by = "country") %>% 
-  arrange(desc(total))
+  arrange(desc(Total))
 ```
 
 ```{r, include=FALSE}
 undrft_plot <- undrft %>% 
   ggplot(aes(x = fct_inorder(country), y = n))+
-  geom_col(aes(fill= total))+
+  geom_col(aes(fill= Total))+
   labs(title = "Number of Undrafted Players in the NBA per Country (1996-2016)", x = "Country", y = "Undrafted Players")+
   coord_flip()
   
@@ -205,7 +205,7 @@ ggplotly(undrft_plot)
 ```
 
 **Figure 4**
-This graph shows the number of players that are "Undrafted" per country represented in the NBA. The NBA draft consists of two rounds, each with 30 selection slots for a total of 60 picks. Undrafted refers to when a player is not slected in the draft but signs with a team as a free agent.
+This graph shows the number of players that are "Undrafted" per country represented in the NBA. The NBA draft consists of two rounds, each with 30 selection slots for a total of 60 picks. Undrafted refers to when a player is not slected in the draft but signs with a team as a free agent. "n" refers to the number of players that are undrafted and "Total" refers to the total number of players drafted from a given country.
 
 ```{r, fig.height= 10, fig.width= 8, include=FALSE}
 country_mean <- dist_players%>% 
