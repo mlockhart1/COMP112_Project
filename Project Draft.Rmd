@@ -73,6 +73,8 @@ The data is more complex than it seems. Even if states have more players, it doe
 There are many other avenues that could be explore through the data we have collected and the visualizations we created. If we were to further this project, We could thought that comparing the information we collected to other major league sports could produce interesting results or creating visualizations that compare our variables to those from the Women's National Basketball Association. 
 We also would want to look into the factors that might explain why certain geographical areas receive the most players. We could look at if certain states have better facilities for players or have more funding. 
 
+INCORPORATE: Could have also looked at how many games was played and minutes played 
+
 
 
 # Sources
