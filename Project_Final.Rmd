@@ -175,7 +175,7 @@ From the beginning of the project, we knew that we wanted to focus on some aspec
 From a data science standpoint we wanted to understand the significance of sports in general and how the coding we learned in class could help us understand trends and maybe make predictions. We ended up focusing primarily on the NBA with the majority of our data came from three data sets called “all_seasons”, “nbaStats”, and "NBA Players by State". The "all_seasons" data set contains two decades (1996-2016) of data on each player who has been part of a team's roster. It illustrates demographic variables such as age, height, weight and country of origin. It also capture biographical details like the team they played for, draft year and round. In addition, it also demonstrates statistics like games played, average number of points, rebounds, assists, etc. "nbaStats" looks at player's status, position, label, as well as other various statistics from 1996 to 2016. "NBA Players by State" was mostly useful as it had the states domestic players were born in. It also provided other statistics like the number of years play. We wanted to understand the correlation between players percieved value and their demographics. We used variables like draft position, number of undrafted players, total of players from state/country, and average points scored to capture this percieved value.  
 
 
-# Foreign Country Representation in the NBA
+# Country Representation in the NBA
 
 ```{r, include=FALSE}
   total_countries <- ggplot(dist_countries, aes(x = season, y = total_countries))+
